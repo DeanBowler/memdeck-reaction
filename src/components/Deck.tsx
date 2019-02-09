@@ -8,17 +8,14 @@ interface DeckProps {
     model: DeckModel;
 }
 
-const DeckHolder = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-`;
+const DeckHolder = styled.div``;
 
 const PaddedContainer = styled.div`
     margin: 10px;
+    display: inline-block;
 `;
 
-const Deck: React.SFC<DeckProps> = props => (
+const Deck = (props: DeckProps) => (
     <DeckHolder>
         {props.model.map(c => (
             <PaddedContainer key={c.number + c.suit}>

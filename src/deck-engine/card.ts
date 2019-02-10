@@ -5,14 +5,24 @@ export enum CardSuit {
     Spades = 'spades',
 }
 
+export enum CardColor {
+    Red = 'red',
+    Black = 'black',
+}
+
 export interface CardModel {
     suit: CardSuit;
     number: number;
 }
 
-export function suiteName(suite: CardSuit) {
-    return suite.toLowerCase();
-}
+export const isCourtCard = (card: CardModel) => card.number > 10;
+
+export const suiteName = (suite: CardSuit) => suite.toLowerCase();
+
+export const cardColor = (card: CardModel) =>
+    [CardSuit.Spades, CardSuit.Clubs].includes(card.suit)
+        ? CardColor.Black
+        : CardColor.Red;
 
 export function valueName(number: number): string {
     switch (number) {

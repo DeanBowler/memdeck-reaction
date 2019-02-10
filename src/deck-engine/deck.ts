@@ -26,4 +26,8 @@ export const shuffle = (deck: DeckModel) => {
     return shuffled;
 };
 
-// export const createRandomDeck = () =>
+export const pass = (index: number, deck: DeckModel) => {
+    const firstHalf = deck.slice(0, index);
+    const secondHalf = deck.slice(index, deck.length);
+    return [...secondHalf, ...firstHalf];
+};

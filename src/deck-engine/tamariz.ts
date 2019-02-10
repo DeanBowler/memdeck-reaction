@@ -55,5 +55,5 @@ export const newTamariz: () => DeckModel = () => {
         { number: 6, suit: CardSuit.Clubs },
         { number: 1, suit: CardSuit.Hearts },
         { number: 9, suit: CardSuit.Diamonds },
-    ];
+    ].map((c, i) => ({ stackPosition: i + 1, ...c }));
 };

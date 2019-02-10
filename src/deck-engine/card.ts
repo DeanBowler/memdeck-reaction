@@ -13,6 +13,7 @@ export enum CardColor {
 export interface CardModel {
     suit: CardSuit;
     number: number;
+    stackPosition?: number;
 }
 
 export const isCourtCard = (card: CardModel) => card.number > 10;

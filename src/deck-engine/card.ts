@@ -1,3 +1,5 @@
+import { pipe, concat } from 'ramda';
+
 export enum CardSuit {
     Clubs = 'clubs',
     Diamonds = 'diamonds',
@@ -42,3 +44,11 @@ export function valueName(number: number): string {
 
 export const friendlyName = (card: CardModel) =>
     `${valueName(card.number)} of ${card.suit}`;
+
+const cardModelToSvgName = (model: CardModel) =>
+    `${valueName(model.number)}_of_${suiteName(model.suit)}.svg`;
+
+export const cardModelToPath = pipe(
+    cardModelToSvgName,
+    concat('/images/card-faces/'),
+);

@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { CardModel, valueName, suiteName, isCourtCard } from '../deck-engine';
-import { compose, concat } from 'ramda';
+import { CardModel, cardModelToPath } from '../deck-engine';
 import styled from 'styled-components';
 import palette from '../palette';
 
@@ -10,14 +9,6 @@ export interface CardProps {
     model: CardModel;
     scale?: number;
 }
-
-const cardModelToSvgName = (model: CardModel) =>
-    `${valueName(model.number)}_of_${suiteName(model.suit)}.svg`;
-
-const cardModelToPath = compose(
-    concat('/images/card-faces/'),
-    cardModelToSvgName,
-);
 
 const CardContainer = styled.div`
     background: ${palette.grey5} url('/images/card-textures/card-texture_2--lighter.jpg');

@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { CardModel } from '../deck-engine';
 import { CardProps } from './Card';
 import { compose, equals } from 'ramda';
-import { useEffect } from 'react';
 
 const CardStackContainer = styled.div`
     margin: 0.75rem;
@@ -52,7 +51,7 @@ const CardStackSubtitle = styled.div`
 `;
 
 const WonkyCardContainer = styled.div`
-    margin: 5px;
+    margin: 15px;
 `;
 
 type cardAdaptor = (card: React.ComponentType<CardProps>) => any;
@@ -68,6 +67,7 @@ export interface CardStackProps {
     actions?: React.ReactChild;
     cardAdaptors?: cardAdaptor[];
     wrapOverflow?: boolean;
+    cardScale?: number;
 }
 
 class CardStack extends React.Component<CardStackProps> {
@@ -115,6 +115,7 @@ class CardStack extends React.Component<CardStackProps> {
             onCardMouseUp,
             actions,
             wrapOverflow,
+            cardScale,
         } = this.props;
 
         const Card = this.cardRender;
@@ -139,7 +140,7 @@ class CardStack extends React.Component<CardStackProps> {
                                 onClick={() => onCardClick && onCardClick(w)}
                                 onMouseDown={() => onCardMouseDown && onCardMouseDown(w)}
                                 onMouseUp={() => onCardMouseUp && onCardMouseUp(w)}
-                                scale={1.2}
+                                scale={cardScale || 1.2}
                             />
                         </WonkyCardContainer>
                     ))}
@@ -148,86 +149,5 @@ class CardStack extends React.Component<CardStackProps> {
         );
     }
 }
-// const CardStack = (props: CardStackProps) => {
-//     // private scrollableRef: HTMLDivElement | null = null;
-
-//     // private cardRender = FlippinCard;
-
-//     // componentDidUpdate(previous: CardStackProps) {
-//     //     if (previous.cards.length !== this.props.cards.length && this.scrollableRef)
-//     //         this.scrollableRef.scrollTo({
-//     //             left: this.scrollableRef.scrollWidth,
-//     //             behavior: 'smooth',
-//     //         });
-//     // }
-
-//     // componentWillMount() {
-//     //     let cardAdaptors = this.props.cardAdaptors || [r => r];
-//     //     cardAdaptors = cardAdaptors.length > 0 ? cardAdaptors : [r => r];
-//     //     this.cardRender = (compose as any)(...cardAdaptors)(FlippinCard);
-//     // }
-
-//     // componentWillUpdate(prevProps: CardStackProps) {
-//     //     if (!equals(prevProps.cardAdaptors, this.props.cardAdaptors)) {
-//     //         console.log('wot');
-//     //         let cardAdaptors = this.props.cardAdaptors || [r => r];
-//     //         cardAdaptors = cardAdaptors.length > 0 ? cardAdaptors : [r => r];
-//     //         this.cardRender = (compose as any)(...cardAdaptors)(FlippinCard);
-//     //     }
-//     // }
-
-//     const {
-//         cards,
-//         shownCards,
-//         title,
-//         subtitle,
-//         onCardClick,
-//         onCardMouseDown,
-//         onCardMouseUp,
-//         actions,
-//         wrapOverflow,
-//     } = props;
-
-//     const [renderer, setRenderer] = React.useState<() => JSX.Element>(FlippinCard);
-
-//     // useEffect(
-//     //     () => {
-//     //         let cardAdaptors = props.cardAdaptors || [r => r];
-//     //         cardAdaptors = cardAdaptors.length > 0 ? cardAdaptors : [r => r];
-//     //         const cardRender = (compose as any)(...cardAdaptors)(FlippinCard);
-//     //         setRenderer(cardRender);
-//     //     },
-//     //     [props.cardAdaptors],
-//     // );
-
-//     const Card = FlippinCard;
-//     return (
-//         <CardStackContainer>
-//             <CardStackHeader>
-//                 <CardStackTitle>
-//                     {title}
-//                     <CardStackSubtitle>{subtitle}</CardStackSubtitle>
-//                 </CardStackTitle>
-
-//                 <CardStackActionsContainer>{actions}</CardStackActionsContainer>
-//             </CardStackHeader>
-
-//             <CardStackList wrapOverflow={wrapOverflow || false}>
-//                 {cards.map(w => (
-//                     <WonkyCardContainer key={w.number + w.suit}>
-//                         <FlippinCard
-//                             faceUp={shownCards && shownCards.includes(w)}
-//                             model={w}
-//                             onClick={() => onCardClick && onCardClick(w)}
-//                             onMouseDown={() => onCardMouseDown && onCardMouseDown(w)}
-//                             onMouseUp={() => onCardMouseUp && onCardMouseUp(w)}
-//                             scale={1.2}
-//                         />
-//                     </WonkyCardContainer>
-//                 ))}
-//             </CardStackList>
-//         </CardStackContainer>
-//     );
-// };
 
 export default CardStack;

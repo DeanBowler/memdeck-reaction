@@ -4,8 +4,11 @@ import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
+import './lib/preloadCardFaces';
+
 import palette from './palette';
 import AppRoutes from './AppRoutes';
+import { APP_TITLE_FONT_FAMILY } from './style';
 
 const Header = styled.header`
     padding: 1rem;
@@ -14,9 +17,10 @@ const Header = styled.header`
 `;
 
 const HeaderTitle = styled.div`
-    font-size: 1.3rem;
+    font-size: 2rem;
+    line-height: 1em;
+    font-family: ${APP_TITLE_FONT_FAMILY};
     color: ${palette.white};
-    font-weight: bold;
     opacity: 0.7;
     transition: opacity 300ms ease-in-out;
 

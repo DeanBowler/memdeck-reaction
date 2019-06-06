@@ -13,6 +13,7 @@ export interface FlippinCardProps extends CardProps {
 const randomRotation = () => `rotate(${Math.random() * 10 - 5}deg) scale(1.05)`;
 
 const FlippinCardContainer = styled.div`
+    display: inline-flex;
     user-select: none;
     cursor: pointer;
     transform: rotate(0deg);
@@ -29,7 +30,11 @@ const FlippinCard = ({
     onMouseUp,
     ...rest
 }: FlippinCardProps) => (
-    <FlippinCardContainer {...{ onClick, onMouseDown, onMouseUp }}>
+    <FlippinCardContainer
+        {...{ onClick, onMouseDown, onMouseUp }}
+        onTouchStart={onMouseDown}
+        onTouchEnd={onMouseDown}
+    >
         {faceUp ? <Card {...rest} /> : <CardBack {...rest} />}
     </FlippinCardContainer>
 );

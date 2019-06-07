@@ -27,9 +27,6 @@ const StyledButton = styled.button<{ marginRight?: string; marginLeft?: string }
 
     :focus {
         outline: none;
-    }
-
-    :focus {
         background: rgba(255, 255, 255, 0.1);
     }
 

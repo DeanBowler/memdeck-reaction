@@ -131,8 +131,8 @@ const SuitsContainer = styled.div`
     height: 80%;
     width: 80%;
     display: flex;
-    flex-direction: row;
     flex-flow: wrap;
+    flex-direction: row;
 `;
 
 interface ShapeContainerProps {

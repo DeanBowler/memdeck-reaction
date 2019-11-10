@@ -1,23 +1,17 @@
 import React, { useState, useCallback } from 'react';
-import { newTamariz, CardModel, DeckModel } from '../deck-engine';
 import { symmetricDifference } from 'ramda';
 import styled from 'styled-components';
+
+import { newTamariz, CardModel } from '../deck-engine';
+import { drawItemsFromRandomPoint } from '../deck-engine/random';
 import Button from '../components/Button';
 import CardStack from '../components/CardStack';
 import Input from '../components/Input';
 
 const tamarizDeck = newTamariz();
 
-const drawCards = (numberToDraw: number, carryover = true) => (deck: DeckModel) => {
-    const index = Math.round(Math.random() * (deck.length - 1));
-    const drawn = deck.slice(index, index + numberToDraw);
-
-    const remainder = carryover ? deck.slice(0, numberToDraw - drawn.length) : [];
-
-    return [...drawn, ...remainder];
-};
-
-const drawCardsTamariz = (numberToDraw: number) => drawCards(numberToDraw)(tamarizDeck);
+const drawCardsTamariz = (numberToDraw: number) =>
+    drawItemsFromRandomPoint<CardModel>(numberToDraw)(tamarizDeck);
 
 const OneShotTrainerContainer = styled.div`
     display: flex;
@@ -32,13 +26,16 @@ const ActionsContainer = styled.div`
 `;
 
 const OneShotTrainer = () => {
-    const [numberToDraw, setNumberToDraw] = useState(2);
+    const [numberToDraw, setNumberToDraw] = useState(3);
     const [drawnCards, setDrawnCards] = useState(drawCardsTamariz(numberToDraw));
-    const [shownCards, setShownCards] = useState([] as CardModel[]);
+    const [shownCards, setShownCards] = useState<CardModel[]>([drawnCards[1]]);
 
     const redraw = useCallback(() => {
-        setDrawnCards(drawCardsTamariz(numberToDraw));
-        setShownCards([]);
+        const drawn = drawCardsTamariz(numberToDraw);
+        setDrawnCards(drawn);
+        const show = drawn[1];
+        console.log(show);
+        setShownCards([show]);
     }, [numberToDraw]);
 
     const onCardClick = useCallback(

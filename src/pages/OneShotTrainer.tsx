@@ -17,7 +17,7 @@ const OneShotTrainerContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    padding: 3rem;
+    padding: 1rem;
 `;
 
 const ActionsContainer = styled.div`
@@ -33,8 +33,7 @@ const OneShotTrainer = () => {
     const redraw = useCallback(() => {
         const drawn = drawCardsTamariz(numberToDraw);
         setDrawnCards(drawn);
-        const show = drawn[1];
-        console.log(show);
+        const show = drawn[Math.floor(numberToDraw / 2)];
         setShownCards([show]);
     }, [numberToDraw]);
 
@@ -64,7 +63,7 @@ const OneShotTrainer = () => {
             <CardStack
                 shownCards={shownCards}
                 cards={drawnCards}
-                cardScale={2}
+                cardScale={1.25}
                 onCardClick={onCardClick}
             />
         </OneShotTrainerContainer>

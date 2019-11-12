@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { CardModel } from '../deck-engine';
 import { CardProps } from './Card';
 import { compose, equals } from 'ramda';
+import media from 'styled-media-query';
 
 const CardStackContainer = styled.div`
   margin: 0.75rem;
@@ -13,11 +14,19 @@ const CardStackContainer = styled.div`
   box-shadow: inset 5px 5px 15px rgba(0, 0, 0, 0.2);
   overflow: auto;
   border-radius: 5px;
+
+  ${media.lessThan('medium')`
+    margin: 0.5rem;
+    padding: 0.5rem;
+  `}
 `;
 
-const CardStackList = styled.div<{ wrapOverflow: boolean }>`
+const CardStackList = styled.div<{ wrapOverflow: boolean; center: boolean }>`
   display: flex;
+
   min-width: min-content;
+
+  justify-content: ${p => (p.center ? 'center' : 'baseline')};
   flex-wrap: ${p => (p.wrapOverflow ? 'wrap' : 'unset')};
 `;
 
@@ -25,8 +34,13 @@ const CardStackHeader = styled.div`
   display: flex;
   align-items: baseline;
   margin-bottom: 0.5rem;
+
   position: sticky;
   left: 0;
+
+  ${media.lessThan('small')`
+      margin-bottom: 0.25rem;
+  `}
 `;
 
 const CardStackTitle = styled.div`
@@ -35,7 +49,6 @@ const CardStackTitle = styled.div`
   color: rgba(255, 255, 255, 0.8);
   font-size: 1.5rem;
   line-height: 1em;
-  font-weight: bold;
   flex: 1 1 auto;
 `;
 
@@ -51,7 +64,11 @@ const CardStackSubtitle = styled.div`
 `;
 
 const WonkyCardContainer = styled.div`
-  margin: 15px;
+  margin: 1rem;
+
+  ${media.lessThan('medium')`
+    margin: 0.5rem;
+  `}
 `;
 
 type cardAdaptor = (card: React.ComponentType<CardProps>) => any;
@@ -68,9 +85,14 @@ export interface CardStackProps {
   cardAdaptors?: cardAdaptor[];
   wrapOverflow?: boolean;
   cardScale?: number;
+  center: boolean;
 }
 
 class CardStack extends React.Component<CardStackProps> {
+  static defaultProps = {
+    center: false,
+  };
+
   private scrollableRef: HTMLDivElement | null = null;
 
   private cardRender = FlippinCard;
@@ -116,22 +138,26 @@ class CardStack extends React.Component<CardStackProps> {
       actions,
       wrapOverflow,
       cardScale,
+      center,
     } = this.props;
 
     const Card = this.cardRender;
 
+    const shouldRenderHeader = title || subtitle;
+
     return (
       <CardStackContainer ref={r => (this.scrollableRef = r)}>
-        <CardStackHeader>
-          <CardStackTitle>
-            {title}
-            <CardStackSubtitle>{subtitle}</CardStackSubtitle>
-          </CardStackTitle>
+        {shouldRenderHeader && (
+          <CardStackHeader>
+            <CardStackTitle>
+              {title}
+              <CardStackSubtitle>{subtitle}</CardStackSubtitle>
+            </CardStackTitle>
 
-          <CardStackActionsContainer>{actions}</CardStackActionsContainer>
-        </CardStackHeader>
-
-        <CardStackList wrapOverflow={wrapOverflow || false}>
+            <CardStackActionsContainer>{actions}</CardStackActionsContainer>
+          </CardStackHeader>
+        )}
+        <CardStackList wrapOverflow={wrapOverflow || false} center={center}>
           {cards.map(w => (
             <WonkyCardContainer key={w.number + w.suit}>
               <Card

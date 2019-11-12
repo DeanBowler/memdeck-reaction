@@ -35,14 +35,7 @@ const ToolsContainer = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
 
-  font-size: 2rem;
-  color: ${palette.white};
-`;
-
-const DirectionText = styled.div`
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 2rem;
+  font-size: 1.5rem;
   color: ${palette.white};
 `;
 
@@ -93,7 +86,7 @@ export default () => {
       direction,
       clue: direction === 'next' ? first : second,
       answer: direction === 'next' ? second : first,
-      dummyCards: drawSelection(4),
+      dummyCards: drawSelection(3),
       started: new Date(),
     });
   }, []);
@@ -129,17 +122,18 @@ export default () => {
       handleGuessCardClick(secondRowCards[Number.parseInt(event.key) - 1]);
   });
 
+  const nextOrPreviousText =
+    currentQuestion && `The ${currentQuestion.direction} card is:`;
+
   return (
     <WhichIsTrainerContainer>
       <CardStack
         shownCards={currentQuestion && [currentQuestion.clue]}
         cards={currentQuestion ? [currentQuestion.clue] : []}
         cardScale={1.25}
-        //onCardClick={onCardClick}
+        center={true}
       />
-      {currentQuestion && (
-        <DirectionText>The {currentQuestion.direction} card is:</DirectionText>
-      )}
+
       <ToolsContainer>
         <div>{timerValue}</div>
         <Button onClick={handleStart} disabled={currentQuestion && !answeredTime}>
@@ -150,10 +144,12 @@ export default () => {
         </div>
       </ToolsContainer>
       <CardStack
+        title={nextOrPreviousText}
         shownCards={shownSecondRow}
         cards={secondRowCards}
-        cardScale={1.25}
+        cardScale={1}
         onCardClick={handleGuessCardClick}
+        center={true}
       />
     </WhichIsTrainerContainer>
   );

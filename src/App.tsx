@@ -3,6 +3,7 @@ import './App.css';
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
+import media from 'styled-media-query';
 
 import './lib/preloadCardFaces';
 
@@ -11,7 +12,11 @@ import AppRoutes from './AppRoutes';
 import { APP_TITLE_FONT_FAMILY } from './style';
 
 const Header = styled.header`
-  padding: 1rem;
+  padding: 1rem 2rem;
+
+  ${media.lessThan('medium')`
+    padding: 0.5rem 1rem;
+  `}
 
   user-select: none;
 `;
@@ -30,7 +35,15 @@ const HeaderTitle = styled.div`
 `;
 
 const ContentContainer = styled.div`
-  margin: 1rem;
+  margin: 1rem 3rem;
+
+  ${media.lessThan('medium')`
+    margin: 0.5rem;
+  `}
+
+  ${media.lessThan('small')`
+    margin: 0.25rem;
+  `}
 `;
 
 const theme = {

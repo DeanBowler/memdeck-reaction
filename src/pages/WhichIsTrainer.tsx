@@ -96,8 +96,6 @@ export default () => {
       if (!currentQuestion || answeredTime) return;
       const correct = currentQuestion.answer === card;
 
-      setCurrentQuestion({ ...currentQuestion });
-
       const time = new Date();
 
       setScore({
@@ -130,7 +128,7 @@ export default () => {
       <CardStack
         shownCards={currentQuestion && [currentQuestion.clue]}
         cards={currentQuestion ? [currentQuestion.clue] : []}
-        cardScale={1.25}
+        cardScale={1.2}
         center={true}
       />
 

@@ -17,7 +17,6 @@ const OneShotTrainerContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    padding: 1rem;
 `;
 
 const ActionsContainer = styled.div`
@@ -63,7 +62,7 @@ const OneShotTrainer = () => {
             <CardStack
                 shownCards={shownCards}
                 cards={drawnCards}
-                cardScale={1.25}
+                cardScale={1.5}
                 onCardClick={onCardClick}
             />
         </OneShotTrainerContainer>

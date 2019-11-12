@@ -28,7 +28,6 @@ const WhichIsTrainerContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    padding: 2rem;
 `;
 
 const ToolsContainer = styled.div`

@@ -8,126 +8,126 @@ import CardStack from '../components/CardStack';
 import { withHints } from '../components/HintableCard';
 
 const ActionsContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
 `;
 
 export interface DrawFromFanProps {}
 
 export interface DrawFromFanState {
-    deck: DeckModel;
-    withdrawn: CardModel[];
-    peeking: CardModel | undefined;
-    showWithdrawn: CardModel[];
-    numberToDraw: number;
+  deck: DeckModel;
+  withdrawn: CardModel[];
+  peeking: CardModel | undefined;
+  showWithdrawn: CardModel[];
+  numberToDraw: number;
 }
 
 export default class DrawFromFanTrainer extends React.Component<
-    DrawFromFanProps,
-    DrawFromFanState
+  DrawFromFanProps,
+  DrawFromFanState
 > {
-    constructor(props: DrawFromFanProps) {
-        super(props);
+  constructor(props: DrawFromFanProps) {
+    super(props);
 
-        this.state = {
-            deck: newTamariz(),
-            withdrawn: [],
-            peeking: undefined,
-            showWithdrawn: [],
-            numberToDraw: 1,
-        };
-    }
-
-    reset = () =>
-        this.setState({
-            deck: newTamariz(),
-            withdrawn: [],
-            peeking: undefined,
-            showWithdrawn: [],
-        });
-
-    peek = () => this.setState(({ deck }) => ({ peeking: last(deck) }));
-    unpeek = () => this.setState({ peeking: undefined });
-
-    revealAll = () => this.setState(({ withdrawn }) => ({ showWithdrawn: withdrawn }));
-
-    shuffleWithdrawn = () =>
-        this.setState(({ withdrawn }) => ({ withdrawn: shuffle(withdrawn) }));
-
-    handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const numberToDraw = Number.parseInt(e.target.value) || 0;
-        this.setState({ numberToDraw });
+    this.state = {
+      deck: newTamariz(),
+      withdrawn: [],
+      peeking: undefined,
+      showWithdrawn: [],
+      numberToDraw: 1,
     };
+  }
 
-    handleCardClick = (card: CardModel) =>
-        this.setState(s => ({
-            showWithdrawn: symmetricDifference([card], s.showWithdrawn),
-        }));
+  reset = () =>
+    this.setState({
+      deck: newTamariz(),
+      withdrawn: [],
+      peeking: undefined,
+      showWithdrawn: [],
+    });
 
-    drawAndPass = () => {
-        const index = Math.round(Math.random() * (this.state.deck.length - 1));
+  peek = () => this.setState(({ deck }) => ({ peeking: last(deck) }));
+  unpeek = () => this.setState({ peeking: undefined });
 
-        this.setState(s => {
-            const drawnCards = s.deck.slice(index, index + s.numberToDraw);
-            const withoutDrawn = s.deck.filter(c => !drawnCards.includes(c));
-            const passed = pass(index, withoutDrawn);
+  revealAll = () => this.setState(({ withdrawn }) => ({ showWithdrawn: withdrawn }));
 
-            return {
-                withdrawn: [...s.withdrawn, ...drawnCards],
-                deck: passed,
-            };
-        });
-    };
+  shuffleWithdrawn = () =>
+    this.setState(({ withdrawn }) => ({ withdrawn: shuffle(withdrawn) }));
 
-    render() {
-        const { peeking, showWithdrawn, withdrawn, deck, numberToDraw } = this.state;
+  handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const numberToDraw = Number.parseInt(e.target.value) || 0;
+    this.setState({ numberToDraw });
+  };
 
-        return (
-            <div>
-                <ActionsContainer>
-                    <Button onClick={this.reset} marginRight="1em">
-                        Reset
-                    </Button>
-                    <Input
-                        type="number"
-                        onChange={this.handleNumberChange}
-                        value={numberToDraw}
-                        style={{ width: '2rem' }}
-                    />
-                    <Button onClick={this.drawAndPass} marginRight="1em">
-                        Draw cards
-                    </Button>
-                </ActionsContainer>
-                {showWithdrawn && (
-                    <CardStack
-                        title="drawn"
-                        subtitle="(click to reveal)"
-                        cards={withdrawn}
-                        shownCards={showWithdrawn}
-                        onCardClick={this.handleCardClick}
-                        cardAdaptors={[withHints]}
-                        actions={
-                            <>
-                                <Button onClick={this.revealAll} marginRight="5px">
-                                    Reveal All
-                                </Button>
-                                <Button onClick={this.shuffleWithdrawn}>Shuffle</Button>
-                            </>
-                        }
-                    />
-                )}
-                {
-                    <CardStack
-                        title="deck"
-                        subtitle="(hold to peek bottom)"
-                        cards={takeLast(1, deck)}
-                        shownCards={peeking ? [peeking] : []}
-                        onCardMouseDown={this.peek}
-                        onCardMouseUp={this.unpeek}
-                    />
-                }
-            </div>
-        );
-    }
+  handleCardClick = (card: CardModel) =>
+    this.setState(s => ({
+      showWithdrawn: symmetricDifference([card], s.showWithdrawn),
+    }));
+
+  drawAndPass = () => {
+    const index = Math.round(Math.random() * (this.state.deck.length - 1));
+
+    this.setState(s => {
+      const drawnCards = s.deck.slice(index, index + s.numberToDraw);
+      const withoutDrawn = s.deck.filter(c => !drawnCards.includes(c));
+      const passed = pass(index, withoutDrawn);
+
+      return {
+        withdrawn: [...s.withdrawn, ...drawnCards],
+        deck: passed,
+      };
+    });
+  };
+
+  render() {
+    const { peeking, showWithdrawn, withdrawn, deck, numberToDraw } = this.state;
+
+    return (
+      <div>
+        <ActionsContainer>
+          <Button onClick={this.reset} marginRight="1em">
+            Reset
+          </Button>
+          <Input
+            type="number"
+            onChange={this.handleNumberChange}
+            value={numberToDraw}
+            style={{ width: '2rem' }}
+          />
+          <Button onClick={this.drawAndPass} marginRight="1em">
+            Draw cards
+          </Button>
+        </ActionsContainer>
+        {showWithdrawn && (
+          <CardStack
+            title="drawn"
+            subtitle="(click to reveal)"
+            cards={withdrawn}
+            shownCards={showWithdrawn}
+            onCardClick={this.handleCardClick}
+            cardAdaptors={[withHints]}
+            actions={
+              <>
+                <Button onClick={this.revealAll} marginRight="5px">
+                  Reveal All
+                </Button>
+                <Button onClick={this.shuffleWithdrawn}>Shuffle</Button>
+              </>
+            }
+          />
+        )}
+        {
+          <CardStack
+            title="deck"
+            subtitle="(hold to peek bottom)"
+            cards={takeLast(1, deck)}
+            shownCards={peeking ? [peeking] : []}
+            onCardMouseDown={this.peek}
+            onCardMouseUp={this.unpeek}
+          />
+        }
+      </div>
+    );
+  }
 }

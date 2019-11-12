@@ -7,147 +7,147 @@ import { CardProps } from './Card';
 import { compose, equals } from 'ramda';
 
 const CardStackContainer = styled.div`
-    margin: 0.75rem;
-    padding: 1rem;
-    background: rgba(0, 0, 0, 0.1);
-    box-shadow: inset 5px 5px 15px rgba(0, 0, 0, 0.2);
-    overflow: auto;
-    border-radius: 5px;
+  margin: 0.75rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.1);
+  box-shadow: inset 5px 5px 15px rgba(0, 0, 0, 0.2);
+  overflow: auto;
+  border-radius: 5px;
 `;
 
 const CardStackList = styled.div<{ wrapOverflow: boolean }>`
-    display: flex;
-    min-width: min-content;
-    flex-wrap: ${p => (p.wrapOverflow ? 'wrap' : 'unset')};
+  display: flex;
+  min-width: min-content;
+  flex-wrap: ${p => (p.wrapOverflow ? 'wrap' : 'unset')};
 `;
 
 const CardStackHeader = styled.div`
-    display: flex;
-    align-items: baseline;
-    margin-bottom: 0.5rem;
-    position: sticky;
-    left: 0;
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+  position: sticky;
+  left: 0;
 `;
 
 const CardStackTitle = styled.div`
-    display: flex;
-    align-items: baseline;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 1.5rem;
-    line-height: 1em;
-    font-weight: bold;
-    flex: 1 1 auto;
+  display: flex;
+  align-items: baseline;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.5rem;
+  line-height: 1em;
+  font-weight: bold;
+  flex: 1 1 auto;
 `;
 
 const CardStackActionsContainer = styled.div`
-    flex: 0 1 auto;
+  flex: 0 1 auto;
 `;
 
 const CardStackSubtitle = styled.div`
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.9rem;
-    margin-left: 0.5rem;
-    font-weight: normal;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+  font-weight: normal;
 `;
 
 const WonkyCardContainer = styled.div`
-    margin: 15px;
+  margin: 15px;
 `;
 
 type cardAdaptor = (card: React.ComponentType<CardProps>) => any;
 
 export interface CardStackProps {
-    cards: CardModel[];
-    shownCards?: CardModel[];
-    title?: string;
-    subtitle?: string;
-    onCardClick?: (card: CardModel) => void;
-    onCardMouseDown?: (card: CardModel) => void;
-    onCardMouseUp?: (card: CardModel) => void;
-    actions?: React.ReactChild;
-    cardAdaptors?: cardAdaptor[];
-    wrapOverflow?: boolean;
-    cardScale?: number;
+  cards: CardModel[];
+  shownCards?: CardModel[];
+  title?: string;
+  subtitle?: string;
+  onCardClick?: (card: CardModel) => void;
+  onCardMouseDown?: (card: CardModel) => void;
+  onCardMouseUp?: (card: CardModel) => void;
+  actions?: React.ReactChild;
+  cardAdaptors?: cardAdaptor[];
+  wrapOverflow?: boolean;
+  cardScale?: number;
 }
 
 class CardStack extends React.Component<CardStackProps> {
-    private scrollableRef: HTMLDivElement | null = null;
+  private scrollableRef: HTMLDivElement | null = null;
 
-    private cardRender = FlippinCard;
+  private cardRender = FlippinCard;
 
-    private maybeScrollRight(previousProps: CardStackProps) {
-        const hasMoreCards = this.props.cards.length > previousProps.cards.length;
+  private maybeScrollRight(previousProps: CardStackProps) {
+    const hasMoreCards = this.props.cards.length > previousProps.cards.length;
 
-        if (hasMoreCards && this.scrollableRef)
-            this.scrollableRef.scrollTo({
-                left: this.scrollableRef.scrollWidth,
-                behavior: 'smooth',
-            });
+    if (hasMoreCards && this.scrollableRef)
+      this.scrollableRef.scrollTo({
+        left: this.scrollableRef.scrollWidth,
+        behavior: 'smooth',
+      });
+  }
+
+  componentDidUpdate(previous: CardStackProps) {
+    this.maybeScrollRight(previous);
+  }
+
+  componentWillMount() {
+    let cardAdaptors = this.props.cardAdaptors || [r => r];
+    cardAdaptors = cardAdaptors.length > 0 ? cardAdaptors : [r => r];
+    this.cardRender = (compose as any)(...cardAdaptors)(FlippinCard);
+  }
+
+  componentWillUpdate(prevProps: CardStackProps) {
+    if (!equals(prevProps.cardAdaptors, this.props.cardAdaptors)) {
+      console.log('wot');
+      let cardAdaptors = this.props.cardAdaptors || [r => r];
+      cardAdaptors = cardAdaptors.length > 0 ? cardAdaptors : [r => r];
+      this.cardRender = (compose as any)(...cardAdaptors)(FlippinCard);
     }
+  }
 
-    componentDidUpdate(previous: CardStackProps) {
-        this.maybeScrollRight(previous);
-    }
+  render() {
+    const {
+      cards,
+      shownCards,
+      title,
+      subtitle,
+      onCardClick,
+      onCardMouseDown,
+      onCardMouseUp,
+      actions,
+      wrapOverflow,
+      cardScale,
+    } = this.props;
 
-    componentWillMount() {
-        let cardAdaptors = this.props.cardAdaptors || [r => r];
-        cardAdaptors = cardAdaptors.length > 0 ? cardAdaptors : [r => r];
-        this.cardRender = (compose as any)(...cardAdaptors)(FlippinCard);
-    }
+    const Card = this.cardRender;
 
-    componentWillUpdate(prevProps: CardStackProps) {
-        if (!equals(prevProps.cardAdaptors, this.props.cardAdaptors)) {
-            console.log('wot');
-            let cardAdaptors = this.props.cardAdaptors || [r => r];
-            cardAdaptors = cardAdaptors.length > 0 ? cardAdaptors : [r => r];
-            this.cardRender = (compose as any)(...cardAdaptors)(FlippinCard);
-        }
-    }
+    return (
+      <CardStackContainer ref={r => (this.scrollableRef = r)}>
+        <CardStackHeader>
+          <CardStackTitle>
+            {title}
+            <CardStackSubtitle>{subtitle}</CardStackSubtitle>
+          </CardStackTitle>
 
-    render() {
-        const {
-            cards,
-            shownCards,
-            title,
-            subtitle,
-            onCardClick,
-            onCardMouseDown,
-            onCardMouseUp,
-            actions,
-            wrapOverflow,
-            cardScale,
-        } = this.props;
+          <CardStackActionsContainer>{actions}</CardStackActionsContainer>
+        </CardStackHeader>
 
-        const Card = this.cardRender;
-
-        return (
-            <CardStackContainer ref={r => (this.scrollableRef = r)}>
-                <CardStackHeader>
-                    <CardStackTitle>
-                        {title}
-                        <CardStackSubtitle>{subtitle}</CardStackSubtitle>
-                    </CardStackTitle>
-
-                    <CardStackActionsContainer>{actions}</CardStackActionsContainer>
-                </CardStackHeader>
-
-                <CardStackList wrapOverflow={wrapOverflow || false}>
-                    {cards.map(w => (
-                        <WonkyCardContainer key={w.number + w.suit}>
-                            <Card
-                                faceUp={shownCards && shownCards.includes(w)}
-                                model={w}
-                                onClick={() => onCardClick && onCardClick(w)}
-                                onMouseDown={() => onCardMouseDown && onCardMouseDown(w)}
-                                onMouseUp={() => onCardMouseUp && onCardMouseUp(w)}
-                                scale={cardScale || 1.2}
-                            />
-                        </WonkyCardContainer>
-                    ))}
-                </CardStackList>
-            </CardStackContainer>
-        );
-    }
+        <CardStackList wrapOverflow={wrapOverflow || false}>
+          {cards.map(w => (
+            <WonkyCardContainer key={w.number + w.suit}>
+              <Card
+                faceUp={shownCards && shownCards.includes(w)}
+                model={w}
+                onClick={() => onCardClick && onCardClick(w)}
+                onMouseDown={() => onCardMouseDown && onCardMouseDown(w)}
+                onMouseUp={() => onCardMouseUp && onCardMouseUp(w)}
+                scale={cardScale || 1.2}
+              />
+            </WonkyCardContainer>
+          ))}
+        </CardStackList>
+      </CardStackContainer>
+    );
+  }
 }
 
 export default CardStack;

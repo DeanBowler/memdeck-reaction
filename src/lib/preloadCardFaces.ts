@@ -4,8 +4,8 @@ import { newDeck, cardModelToPath } from '../deck-engine';
 const preloadImage = (src: string) => (new Image().src = src);
 
 const preloadCardImage = pipe(
-    cardModelToPath,
-    preloadImage,
+  cardModelToPath,
+  preloadImage,
 );
 
 forEach(preloadCardImage)(newDeck());

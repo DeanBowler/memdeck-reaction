@@ -47,7 +47,7 @@ const CardStackTitle = styled.div`
   display: flex;
   align-items: baseline;
   color: rgba(255, 255, 255, 0.8);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   line-height: 1em;
   flex: 1 1 auto;
 `;
@@ -64,6 +64,7 @@ const CardStackSubtitle = styled.div`
 `;
 
 const WonkyCardContainer = styled.div`
+  display: flex;
   margin: 1rem;
 
   ${media.lessThan('medium')`

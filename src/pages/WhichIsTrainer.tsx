@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 
 import useEventListener from '@use-it/event-listener';
-import { differenceInSeconds } from 'date-fns';
+import { differenceInMilliseconds } from 'date-fns';
 import styled from 'styled-components';
 
 import palette from '../palette';
@@ -21,7 +21,7 @@ interface WhichIsQuestion {
 interface Score {
   count: number;
   correct: number;
-  totalSeconds: number;
+  totalMs: number;
 }
 
 const WhichIsTrainerContainer = styled.div`
@@ -33,21 +33,34 @@ const WhichIsTrainerContainer = styled.div`
 const ToolsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
 
   font-size: 1.5rem;
   color: ${palette.white};
+
+  > * {
+    display: flex;
+    justify-content: center;
+    flex: 1 1 33%;
+  }
 `;
 
+const StartOrNextButton = styled(Button)`
+  flex: 1 1 auto;
+`;
+
+const anyDeck = newTamariz();
+
+const numberOfDummies = 3;
+
 const getElapsed = (started: Date, ended = new Date()) =>
-  `${differenceInSeconds(ended, started)} seconds`;
+  `${Math.round(differenceInMilliseconds(ended, started) / 1000)}s`;
 
 export default () => {
   const [currentQuestion, setCurrentQuestion] = useState<WhichIsQuestion>();
 
   const [answeredTime, setAnsweredTime] = useState<Date>();
 
-  const [score, setScore] = useState<Score>({ correct: 0, count: 0, totalSeconds: 0 });
+  const [score, setScore] = useState<Score>({ correct: 0, count: 0, totalMs: 0 });
 
   const [timerValue, setTimerValue] = useState<string>();
 
@@ -63,7 +76,7 @@ export default () => {
     () =>
       currentQuestion
         ? shuffle([currentQuestion.answer, ...currentQuestion.dummyCards])
-        : [],
+        : anyDeck.slice(1, numberOfDummies + 2),
     [currentQuestion],
   );
 
@@ -86,7 +99,7 @@ export default () => {
       direction,
       clue: direction === 'next' ? first : second,
       answer: direction === 'next' ? second : first,
-      dummyCards: drawSelection(3),
+      dummyCards: drawSelection(numberOfDummies),
       started: new Date(),
     });
   }, []);
@@ -101,8 +114,7 @@ export default () => {
       setScore({
         count: score.count + 1,
         correct: score.correct + (correct ? 1 : 0),
-        totalSeconds:
-          score.totalSeconds + differenceInSeconds(time, currentQuestion.started),
+        totalMs: score.totalMs + differenceInMilliseconds(time, currentQuestion.started),
       });
 
       setAnsweredTime(time);
@@ -111,7 +123,11 @@ export default () => {
   );
 
   const shownSecondRow =
-    answeredTime && currentQuestion ? [currentQuestion.answer] : secondRowCards;
+    answeredTime && currentQuestion
+      ? [currentQuestion.answer]
+      : currentQuestion
+      ? secondRowCards
+      : [];
 
   useEventListener<React.KeyboardEvent>('keypress', event => {
     console.log(event);
@@ -120,25 +136,35 @@ export default () => {
       handleGuessCardClick(secondRowCards[Number.parseInt(event.key) - 1]);
   });
 
-  const nextOrPreviousText =
-    currentQuestion && `The ${currentQuestion.direction} card is:`;
+  const nextOrPreviousText = currentQuestion
+    ? `The ${currentQuestion.direction} card is:`
+    : 'Hit Start!';
 
   return (
     <WhichIsTrainerContainer>
       <CardStack
-        shownCards={currentQuestion && [currentQuestion.clue]}
-        cards={currentQuestion ? [currentQuestion.clue] : []}
+        shownCards={currentQuestion ? [currentQuestion.clue] : []}
+        cards={currentQuestion ? [currentQuestion.clue] : [anyDeck[0]]}
         cardScale={1.2}
         center={true}
       />
 
       <ToolsContainer>
         <div>{timerValue}</div>
-        <Button onClick={handleStart} disabled={currentQuestion && !answeredTime}>
-          Start
-        </Button>
         <div>
-          {score.correct}/{score.count} ({score.totalSeconds}s)
+          <StartOrNextButton
+            onClick={handleStart}
+            disabled={currentQuestion && !answeredTime}
+          >
+            {!currentQuestion ? 'Start' : 'Next'}
+          </StartOrNextButton>
+        </div>
+        <div>
+          {score.count > 0 && (
+            <>
+              {score.correct}/{score.count} ({Math.round(score.totalMs / 1000)}s)
+            </>
+          )}
         </div>
       </ToolsContainer>
       <CardStack

@@ -34,6 +34,10 @@ const StyledButton = styled.button<{ marginRight?: string; marginLeft?: string }
     transform: scale(0.95);
     box-shadow: inset 2px 2px 20px rgba(0, 0, 0, 0.4);
   }
+
+  :disabled {
+    opacity: 0.5;
+  }
 `;
 
 const Button = ({ children, ...rest }: ButtonProps) => (

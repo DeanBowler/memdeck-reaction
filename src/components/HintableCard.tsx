@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CardProps } from './Card';
-import { FlippinCardProps } from './FlippinCard';
+import FlippinCard, { FlippinCardProps } from './FlippinCard';
 import styled from 'styled-components/macro';
 import { cardColor, isCourtCard, CardModel, CardSuit } from '../deck-engine';
 import palette from '../palette';
@@ -15,7 +15,7 @@ export interface HintableCardState {
 
 const HintGroup = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-evenly;
   margin-bottom: 0.5rem;
   box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1);
@@ -179,48 +179,47 @@ const SuitHint = ({ model, visible, onClick }: CardHintProps) => {
   );
 };
 
-export const withHints = (WrappedComponent: React.ComponentType<CardProps>) =>
-  class HintableCard extends React.Component<HintableCardProps, HintableCardState> {
-    constructor(props: HintableCardProps) {
-      super(props);
+export class HintableCard extends React.Component<HintableCardProps, HintableCardState> {
+  constructor(props: HintableCardProps) {
+    super(props);
 
-      this.state = {
-        suitHintShow: false,
-        pictureOrNumberHintShow: false,
-        colorHintShow: false,
-      };
-    }
+    this.state = {
+      suitHintShow: false,
+      pictureOrNumberHintShow: false,
+      colorHintShow: false,
+    };
+  }
 
-    toggleColorHintShow = () => this.setState(s => ({ colorHintShow: !s.colorHintShow }));
-    toggleSuitHintShow = () => this.setState(s => ({ suitHintShow: !s.suitHintShow }));
-    togglePictureOrNumberHintShow = () =>
-      this.setState(s => ({ pictureOrNumberHintShow: !s.pictureOrNumberHintShow }));
+  toggleColorHintShow = () => this.setState(s => ({ colorHintShow: !s.colorHintShow }));
+  toggleSuitHintShow = () => this.setState(s => ({ suitHintShow: !s.suitHintShow }));
+  togglePictureOrNumberHintShow = () =>
+    this.setState(s => ({ pictureOrNumberHintShow: !s.pictureOrNumberHintShow }));
 
-    render() {
-      const { model } = this.props;
-      const { suitHintShow, colorHintShow, pictureOrNumberHintShow } = this.state;
+  render() {
+    const { model } = this.props;
+    const { suitHintShow, colorHintShow, pictureOrNumberHintShow } = this.state;
 
-      return (
-        <>
-          <HintGroup>
-            <PictureOrNumberHint
-              model={model}
-              visible={pictureOrNumberHintShow}
-              onClick={this.togglePictureOrNumberHintShow}
-            />
-            <SuitHint
-              model={model}
-              visible={suitHintShow}
-              onClick={this.toggleSuitHintShow}
-            />
-            <ColorHint
-              model={model}
-              visible={colorHintShow}
-              onClick={this.toggleColorHintShow}
-            />
-          </HintGroup>
-          <WrappedComponent {...this.props} />
-        </>
-      );
-    }
-  };
+    return (
+      <>
+        <HintGroup>
+          <PictureOrNumberHint
+            model={model}
+            visible={pictureOrNumberHintShow}
+            onClick={this.togglePictureOrNumberHintShow}
+          />
+          <SuitHint
+            model={model}
+            visible={suitHintShow}
+            onClick={this.toggleSuitHintShow}
+          />
+          <ColorHint
+            model={model}
+            visible={colorHintShow}
+            onClick={this.toggleColorHintShow}
+          />
+        </HintGroup>
+        <FlippinCard {...this.props} />
+      </>
+    );
+  }
+}

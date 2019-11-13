@@ -38,7 +38,7 @@ class DeckOrder extends React.Component<{}, DeckOrderState> {
         shownCards={this.state.shown}
         onCardClick={this.handleCardClick}
         wrapOverflow={true}
-        cardAdaptors={[withOrderDisplay]}
+        // cardAdaptors={[withOrderDisplay]}
         actions={
           <>
             <Button onClick={this.revealAll} marginRight="5px">

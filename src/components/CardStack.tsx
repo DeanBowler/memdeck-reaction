@@ -4,8 +4,9 @@ import FlippinCard from './FlippinCard';
 import styled from 'styled-components/macro';
 import { CardModel } from '../deck-engine';
 import { CardProps } from './Card';
-import { compose, equals } from 'ramda';
 import media from 'styled-media-query';
+import { useState, useEffect, ComponentType, useRef } from 'react';
+import { HintableCard } from './HintableCard';
 
 const CardStackContainer = styled.div`
   margin: 0.75rem;
@@ -65,14 +66,13 @@ const CardStackSubtitle = styled.div`
 
 const WonkyCardContainer = styled.div`
   display: flex;
+  flex-direction: column;
   margin: 1rem;
 
   ${media.lessThan('medium')`
     margin: 0.5rem;
   `}
 `;
-
-type cardAdaptor = (card: React.ComponentType<CardProps>) => any;
 
 export interface CardStackProps {
   cards: CardModel[];
@@ -83,98 +83,75 @@ export interface CardStackProps {
   onCardMouseDown?: (card: CardModel) => void;
   onCardMouseUp?: (card: CardModel) => void;
   actions?: React.ReactChild;
-  cardAdaptors?: cardAdaptor[];
+  showHints?: boolean;
   wrapOverflow?: boolean;
   cardScale?: number;
   center: boolean;
 }
 
-class CardStack extends React.Component<CardStackProps> {
-  static defaultProps = {
-    center: false,
-  };
+const CardStack = ({
+  cards,
+  shownCards,
+  title,
+  subtitle,
+  onCardClick,
+  onCardMouseDown,
+  onCardMouseUp,
+  actions,
+  wrapOverflow,
+  cardScale,
+  center,
+  showHints,
+}: CardStackProps) => {
+  const scrollableRef = useRef<HTMLDivElement | null>(null);
 
-  private scrollableRef: HTMLDivElement | null = null;
+  useEffect(() => {
+    const { current: scrollableEl } = scrollableRef;
 
-  private cardRender = FlippinCard;
+    if (!scrollableEl) return;
 
-  private maybeScrollRight(previousProps: CardStackProps) {
-    const hasMoreCards = this.props.cards.length > previousProps.cards.length;
+    scrollableEl.scrollTo({
+      left: scrollableEl.scrollWidth,
+      behavior: 'smooth',
+    });
+  }, [cards, scrollableRef]);
 
-    if (hasMoreCards && this.scrollableRef)
-      this.scrollableRef.scrollTo({
-        left: this.scrollableRef.scrollWidth,
-        behavior: 'smooth',
-      });
-  }
+  const shouldRenderHeader = title || subtitle;
 
-  componentDidUpdate(previous: CardStackProps) {
-    this.maybeScrollRight(previous);
-  }
+  const CardRender = showHints ? HintableCard : FlippinCard;
 
-  componentWillMount() {
-    let cardAdaptors = this.props.cardAdaptors || [r => r];
-    cardAdaptors = cardAdaptors.length > 0 ? cardAdaptors : [r => r];
-    this.cardRender = (compose as any)(...cardAdaptors)(FlippinCard);
-  }
+  return (
+    <CardStackContainer ref={scrollableRef}>
+      {shouldRenderHeader && (
+        <CardStackHeader>
+          <CardStackTitle>
+            {title}
+            <CardStackSubtitle>{subtitle}</CardStackSubtitle>
+          </CardStackTitle>
 
-  componentWillUpdate(prevProps: CardStackProps) {
-    if (!equals(prevProps.cardAdaptors, this.props.cardAdaptors)) {
-      console.log('wot');
-      let cardAdaptors = this.props.cardAdaptors || [r => r];
-      cardAdaptors = cardAdaptors.length > 0 ? cardAdaptors : [r => r];
-      this.cardRender = (compose as any)(...cardAdaptors)(FlippinCard);
-    }
-  }
+          <CardStackActionsContainer>{actions}</CardStackActionsContainer>
+        </CardStackHeader>
+      )}
+      <CardStackList wrapOverflow={wrapOverflow || false} center={center}>
+        {cards.map(w => (
+          <WonkyCardContainer key={w.number + w.suit}>
+            <CardRender
+              faceUp={shownCards && shownCards.includes(w)}
+              model={w}
+              onClick={() => onCardClick && onCardClick(w)}
+              onMouseDown={() => onCardMouseDown && onCardMouseDown(w)}
+              onMouseUp={() => onCardMouseUp && onCardMouseUp(w)}
+              scale={cardScale || 1.2}
+            />
+          </WonkyCardContainer>
+        ))}
+      </CardStackList>
+    </CardStackContainer>
+  );
+};
 
-  render() {
-    const {
-      cards,
-      shownCards,
-      title,
-      subtitle,
-      onCardClick,
-      onCardMouseDown,
-      onCardMouseUp,
-      actions,
-      wrapOverflow,
-      cardScale,
-      center,
-    } = this.props;
-
-    const Card = this.cardRender;
-
-    const shouldRenderHeader = title || subtitle;
-
-    return (
-      <CardStackContainer ref={r => (this.scrollableRef = r)}>
-        {shouldRenderHeader && (
-          <CardStackHeader>
-            <CardStackTitle>
-              {title}
-              <CardStackSubtitle>{subtitle}</CardStackSubtitle>
-            </CardStackTitle>
-
-            <CardStackActionsContainer>{actions}</CardStackActionsContainer>
-          </CardStackHeader>
-        )}
-        <CardStackList wrapOverflow={wrapOverflow || false} center={center}>
-          {cards.map(w => (
-            <WonkyCardContainer key={w.number + w.suit}>
-              <Card
-                faceUp={shownCards && shownCards.includes(w)}
-                model={w}
-                onClick={() => onCardClick && onCardClick(w)}
-                onMouseDown={() => onCardMouseDown && onCardMouseDown(w)}
-                onMouseUp={() => onCardMouseUp && onCardMouseUp(w)}
-                scale={cardScale || 1.2}
-              />
-            </WonkyCardContainer>
-          ))}
-        </CardStackList>
-      </CardStackContainer>
-    );
-  }
-}
+CardStack.defaultProps = {
+  center: false,
+};
 
 export default CardStack;

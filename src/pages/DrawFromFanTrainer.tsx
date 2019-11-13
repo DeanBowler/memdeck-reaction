@@ -5,7 +5,6 @@ import Button from '../components/Button';
 import { symmetricDifference, last, takeLast } from 'ramda';
 import Input from '../components/Input';
 import CardStack from '../components/CardStack';
-import { withHints } from '../components/HintableCard';
 
 const ActionsContainer = styled.div`
   display: flex;
@@ -106,7 +105,7 @@ export default class DrawFromFanTrainer extends React.Component<
             cards={withdrawn}
             shownCards={showWithdrawn}
             onCardClick={this.handleCardClick}
-            cardAdaptors={[withHints]}
+            showHints={true}
             actions={
               <>
                 <Button onClick={this.revealAll} marginRight="5px">

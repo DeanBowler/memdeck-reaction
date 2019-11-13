@@ -145,7 +145,7 @@ export default () => {
       <CardStack
         shownCards={currentQuestion ? [currentQuestion.clue] : []}
         cards={currentQuestion ? [currentQuestion.clue] : [anyDeck[0]]}
-        cardScale={1.2}
+        initialCardScale={1.2}
         center={true}
       />
 
@@ -171,7 +171,7 @@ export default () => {
         title={nextOrPreviousText}
         shownCards={shownSecondRow}
         cards={secondRowCards}
-        cardScale={1}
+        initialCardScale={1}
         onCardClick={handleGuessCardClick}
         center={true}
       />

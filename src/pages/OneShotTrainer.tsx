@@ -62,7 +62,7 @@ const OneShotTrainer = () => {
       <CardStack
         shownCards={shownCards}
         cards={drawnCards}
-        cardScale={1.5}
+        initialCardScale={1.5}
         onCardClick={onCardClick}
       />
     </OneShotTrainerContainer>

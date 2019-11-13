@@ -4,7 +4,6 @@ import { symmetricDifference } from 'ramda';
 import { newTamariz, CardModel } from '../deck-engine';
 import CardStack from '../components/CardStack';
 import Button from '../components/Button';
-import { withOrderDisplay } from '../components/OrderDisplay';
 
 interface DeckOrderState {
   shown: CardModel[];

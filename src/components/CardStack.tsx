@@ -1,12 +1,13 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import FlippinCard from './FlippinCard';
 import styled from 'styled-components/macro';
-import { CardModel } from '../deck-engine';
-import { CardProps } from './Card';
 import media from 'styled-media-query';
-import { useState, useEffect, ComponentType, useRef } from 'react';
+import { useGesture } from 'react-use-gesture';
+
+import { CardModel } from '../deck-engine';
+import FlippinCard from './FlippinCard';
 import { HintableCard } from './HintableCard';
+import { pipe, min, max } from 'ramda';
 
 const CardStackContainer = styled.div`
   margin: 0.75rem;
@@ -74,6 +75,13 @@ const WonkyCardContainer = styled.div`
   `}
 `;
 
+const MAX_SCALE: number = 2;
+const MIN_SCALE: number = 0.75;
+const limitCardSize = pipe(
+  min(MAX_SCALE),
+  max(MIN_SCALE),
+);
+
 export interface CardStackProps {
   cards: CardModel[];
   shownCards?: CardModel[];
@@ -85,7 +93,7 @@ export interface CardStackProps {
   actions?: React.ReactChild;
   showHints?: boolean;
   wrapOverflow?: boolean;
-  cardScale?: number;
+  initialCardScale: number;
   center: boolean;
 }
 
@@ -99,11 +107,13 @@ const CardStack = ({
   onCardMouseUp,
   actions,
   wrapOverflow,
-  cardScale,
+  initialCardScale,
   center,
   showHints,
 }: CardStackProps) => {
   const scrollableRef = useRef<HTMLDivElement | null>(null);
+
+  const [cardScale, setCardScale] = useState(initialCardScale);
 
   useEffect(() => {
     const { current: scrollableEl } = scrollableRef;
@@ -118,10 +128,26 @@ const CardStack = ({
 
   const shouldRenderHeader = title || subtitle;
 
+  const bind = useGesture({
+    onWheel: ({ shiftKey, delta: [, dy] }) => {
+      if (!shiftKey) return;
+
+      const newCardScale = limitCardSize(cardScale - dy / 1000);
+
+      setCardScale(newCardScale);
+    },
+    onPinch: ({ vdva: [vd], event }) => {
+      const newCardScale = limitCardSize(cardScale + vd / 4);
+
+      setCardScale(newCardScale);
+      event && event.preventDefault();
+    },
+  });
+
   const CardRender = showHints ? HintableCard : FlippinCard;
 
   return (
-    <CardStackContainer ref={scrollableRef}>
+    <CardStackContainer ref={scrollableRef} {...bind()}>
       {shouldRenderHeader && (
         <CardStackHeader>
           <CardStackTitle>
@@ -152,6 +178,7 @@ const CardStack = ({
 
 CardStack.defaultProps = {
   center: false,
+  initialCardScale: 1,
 };
 
 export default CardStack;

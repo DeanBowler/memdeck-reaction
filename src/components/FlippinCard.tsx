@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Card, { CardProps } from './Card';
 import CardBack from './CardBack';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 export interface FlippinCardProps extends CardProps {
   faceUp?: boolean;

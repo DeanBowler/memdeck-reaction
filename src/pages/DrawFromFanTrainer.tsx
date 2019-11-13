@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DeckModel, newTamariz, CardModel, pass, shuffle } from '../deck-engine';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import Button from '../components/Button';
 import { symmetricDifference, last, takeLast } from 'ramda';
 import Input from '../components/Input';

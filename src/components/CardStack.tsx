@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import FlippinCard from './FlippinCard';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { CardModel } from '../deck-engine';
 import { CardProps } from './Card';
 import { compose, equals } from 'ramda';

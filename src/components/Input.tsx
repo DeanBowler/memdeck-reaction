@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   marginRight?: string;

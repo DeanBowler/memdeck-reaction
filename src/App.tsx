@@ -2,7 +2,7 @@ import './App.css';
 
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components/macro';
 import media from 'styled-media-query';
 
 import './lib/preloadCardFaces';

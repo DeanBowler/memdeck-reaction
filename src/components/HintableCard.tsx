@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CardProps } from './Card';
 import { FlippinCardProps } from './FlippinCard';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { cardColor, isCourtCard, CardModel, CardSuit } from '../deck-engine';
 import palette from '../palette';
 
@@ -15,6 +15,7 @@ export interface HintableCardState {
 
 const HintGroup = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
   margin-bottom: 0.5rem;
   box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1);

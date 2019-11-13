@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CardModel, cardModelToPath } from '../deck-engine';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import palette from '../palette';
 
 const DEFAULT_SIZE = { width: 125, height: 180 };

@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { symmetricDifference } from 'ramda';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 import { newTamariz, CardModel } from '../deck-engine';
 import { drawItemsFromRandomPoint } from '../deck-engine/random';

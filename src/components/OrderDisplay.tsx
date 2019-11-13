@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { CardProps } from './Card';
 import { FlippinCardProps } from './FlippinCard';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 export interface OrderDisplayCardProps extends CardProps, FlippinCardProps {}
 

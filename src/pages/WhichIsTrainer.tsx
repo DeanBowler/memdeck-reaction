@@ -2,7 +2,7 @@ import React, { useState, useCallback, useMemo, useEffect } from 'react';
 
 import useEventListener from '@use-it/event-listener';
 import { differenceInMilliseconds } from 'date-fns';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 import palette from '../palette';
 import { newTamariz, CardModel, shuffle } from '../deck-engine';
@@ -137,8 +137,8 @@ export default () => {
   });
 
   const nextOrPreviousText = currentQuestion
-    ? `The ${currentQuestion.direction} card is:`
-    : 'Hit Start!';
+    ? `the ${currentQuestion.direction} card is:`
+    : 'hit start!';
 
   return (
     <WhichIsTrainerContainer>

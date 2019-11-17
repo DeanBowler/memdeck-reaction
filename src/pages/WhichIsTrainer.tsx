@@ -27,7 +27,6 @@ interface Score {
 const WhichIsTrainerContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
 `;
 
 const ToolsContainer = styled.div`
@@ -176,6 +175,7 @@ export default () => {
         initialCardScale={1}
         onCardClick={handleGuessCardClick}
         center={true}
+        wrapOverflow={true}
       />
     </WhichIsTrainerContainer>
   );

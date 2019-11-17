@@ -1,5 +1,3 @@
-import './App.css';
-
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components/macro';
@@ -34,7 +32,15 @@ const HeaderTitle = styled.div`
   }
 `;
 
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
   margin: 1rem 3rem;
 
   ${media.lessThan('medium')`
@@ -54,7 +60,7 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <div className="App">
+        <AppContainer>
           <Header>
             <HeaderTitle>Memdeck Reaction</HeaderTitle>
           </Header>
@@ -63,7 +69,7 @@ class App extends Component {
               <AppRoutes />
             </BrowserRouter>
           </ContentContainer>
-        </div>
+        </AppContainer>
       </ThemeProvider>
     );
   }

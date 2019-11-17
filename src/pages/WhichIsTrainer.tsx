@@ -143,6 +143,7 @@ export default () => {
   return (
     <WhichIsTrainerContainer>
       <CardStack
+        name="which_is:question"
         shownCards={currentQuestion ? [currentQuestion.clue] : []}
         cards={currentQuestion ? [currentQuestion.clue] : [anyDeck[0]]}
         initialCardScale={1.2}
@@ -168,6 +169,7 @@ export default () => {
         </div>
       </ToolsContainer>
       <CardStack
+        name="which_is:guesses"
         title={nextOrPreviousText}
         shownCards={shownSecondRow}
         cards={secondRowCards}

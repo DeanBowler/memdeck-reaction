@@ -98,26 +98,28 @@ export default class DrawFromFanTrainer extends React.Component<
             Draw cards
           </Button>
         </ActionsContainer>
-        {showWithdrawn && (
-          <CardStack
-            title="drawn"
-            subtitle="(click to reveal)"
-            cards={withdrawn}
-            shownCards={showWithdrawn}
-            onCardClick={this.handleCardClick}
-            showHints={true}
-            actions={
-              <>
-                <Button onClick={this.revealAll} marginRight="5px">
-                  Reveal All
-                </Button>
-                <Button onClick={this.shuffleWithdrawn}>Shuffle</Button>
-              </>
-            }
-          />
-        )}
+
+        <CardStack
+          name="draw_from_fan:drawn"
+          title="drawn"
+          subtitle="(click to reveal)"
+          cards={withdrawn}
+          shownCards={showWithdrawn}
+          onCardClick={this.handleCardClick}
+          showHints={true}
+          actions={
+            <>
+              <Button onClick={this.revealAll} marginRight="5px">
+                Reveal All
+              </Button>
+              <Button onClick={this.shuffleWithdrawn}>Shuffle</Button>
+            </>
+          }
+        />
+
         {
           <CardStack
+            name="draw_from_fan:peek"
             title="deck"
             subtitle="(hold to peek bottom)"
             cards={takeLast(1, deck)}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import styled from 'styled-components/macro';
 import media from 'styled-media-query';
@@ -8,6 +8,8 @@ import { CardModel } from '../deck-engine';
 import FlippinCard from './FlippinCard';
 import { HintableCard } from './HintableCard';
 import { pipe, min, max } from 'ramda';
+
+import { useLocalStorage } from 'react-use';
 
 const CardStackContainer = styled.div`
   margin: 0.75rem;
@@ -77,12 +79,10 @@ const WonkyCardContainer = styled.div`
 
 const MAX_SCALE: number = 2;
 const MIN_SCALE: number = 0.75;
-const limitCardSize = pipe(
-  min(MAX_SCALE),
-  max(MIN_SCALE),
-);
+const limitCardSize = pipe(min(MAX_SCALE), max(MIN_SCALE));
 
 export interface CardStackProps {
+  name?: string;
   cards: CardModel[];
   shownCards?: CardModel[];
   title?: string;
@@ -98,6 +98,7 @@ export interface CardStackProps {
 }
 
 const CardStack = ({
+  name,
   cards,
   shownCards,
   title,
@@ -113,7 +114,12 @@ const CardStack = ({
 }: CardStackProps) => {
   const scrollableRef = useRef<HTMLDivElement | null>(null);
 
-  const [cardScale, setCardScale] = useState(initialCardScale);
+  const [cardScale, setCardScale] = useLocalStorage(
+    `${name || 'default_stack'}:card_scale`,
+    initialCardScale,
+  );
+
+  //const [cardScale, setCardScale] = useState(initialCardScale);
 
   useEffect(() => {
     const { current: scrollableEl } = scrollableRef;

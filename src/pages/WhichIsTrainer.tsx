@@ -9,6 +9,8 @@ import { newTamariz, CardModel, shuffle } from '../deck-engine';
 import { drawItemsFromRandomPoint } from '../deck-engine/random';
 import CardStack from '../components/CardStack';
 import Button from '../components/Button';
+import Input from '../components/Input';
+import { useLocalStorage } from 'react-use';
 
 interface WhichIsQuestion {
   direction: 'previous' | 'next';
@@ -47,9 +49,16 @@ const StartOrNextButton = styled(Button)`
   flex: 1 1 auto;
 `;
 
-const anyDeck = newTamariz();
+const NumberOfDummiesInput = styled(Input)`
+  width: 3em;
+`;
 
-const numberOfDummies = 3;
+const NumberOfFakesText = styled.span`
+  color: rgba(255, 255, 255, 0.8);
+  margin-right: 1em;
+`;
+
+const anyDeck = newTamariz();
 
 const getElapsed = (started: Date, ended = new Date()) =>
   `${Math.round(differenceInMilliseconds(ended, started) / 1000)}s`;
@@ -58,6 +67,18 @@ export default () => {
   const [currentQuestion, setCurrentQuestion] = useState<WhichIsQuestion>();
 
   const [answeredTime, setAnsweredTime] = useState<Date>();
+
+  const [numberOfDummies, setNumberOfDummies] = useLocalStorage(
+    'which_is:num_dummies',
+    3,
+  );
+
+  const handleOnDummiesInputChange = useCallback(
+    ({ target: { valueAsNumber } }: React.ChangeEvent<HTMLInputElement>) => {
+      setNumberOfDummies(valueAsNumber);
+    },
+    [setNumberOfDummies],
+  );
 
   const [score, setScore] = useState<Score>({ correct: 0, count: 0, totalMs: 0 });
 
@@ -76,7 +97,7 @@ export default () => {
       currentQuestion
         ? shuffle([currentQuestion.answer, ...currentQuestion.dummyCards])
         : anyDeck.slice(1, numberOfDummies + 2),
-    [currentQuestion],
+    [currentQuestion, numberOfDummies],
   );
 
   const handleStart = useCallback(() => {
@@ -101,7 +122,7 @@ export default () => {
       dummyCards: drawSelection(numberOfDummies),
       started: new Date(),
     });
-  }, []);
+  }, [numberOfDummies]);
 
   const handleGuessCardClick = useCallback(
     (card: CardModel) => {
@@ -176,6 +197,21 @@ export default () => {
         onCardClick={handleGuessCardClick}
         center={true}
         wrapOverflow={true}
+        actions={
+          <>
+            {!currentQuestion && (
+              <>
+                <NumberOfFakesText># fakes</NumberOfFakesText>
+                <NumberOfDummiesInput
+                  type="number"
+                  min={1}
+                  value={numberOfDummies}
+                  onChange={handleOnDummiesInputChange}
+                />
+              </>
+            )}
+          </>
+        }
       />
     </WhichIsTrainerContainer>
   );

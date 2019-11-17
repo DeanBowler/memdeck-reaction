@@ -52,7 +52,7 @@ const CardStackTitle = styled.div`
   align-items: baseline;
   color: rgba(255, 255, 255, 0.8);
   font-size: 1.25rem;
-  line-height: 1em;
+  line-height: 2em;
   flex: 1 1 auto;
 `;
 
@@ -78,7 +78,7 @@ const WonkyCardContainer = styled.div`
 `;
 
 const MAX_SCALE: number = 2;
-const MIN_SCALE: number = 0.75;
+const MIN_SCALE: number = 0.5;
 const limitCardSize = pipe(min(MAX_SCALE), max(MIN_SCALE));
 
 export interface CardStackProps {

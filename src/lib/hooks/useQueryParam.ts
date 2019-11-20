@@ -25,7 +25,6 @@ const useQueryParam = <T = string>(
 
   const setParam = (value: T) => {
     params.set(paramName, `${value}`);
-    location.search = params.toString();
     history.push(`${location.pathname}?${params.toString()}`);
   };
 

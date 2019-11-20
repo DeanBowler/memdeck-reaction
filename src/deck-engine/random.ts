@@ -21,7 +21,6 @@ export const drawRandomItemsWithSeed = <T>(seed: string, numberToDraw: number) =
 
   return range(0, numberToDraw)
     .map(() => seeded.integer({ min: 0, max: items.length - 1 }))
-
     .map(i => items[i]);
 };
 

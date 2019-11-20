@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import words from '../lib/words';
-import { drawRandomItemsWithSeed } from '../deck-engine/random';
+import { drawRandomItemsWithSeed, drawItemsFromRandomPoint } from '../deck-engine/random';
 import styled from 'styled-components/macro';
 import palette from '../palette';
 import Button from '../components/Button';
@@ -9,7 +9,7 @@ import { useLocalStorage } from 'react-use';
 import Input from '../components/Input';
 import useQueryParam from '../lib/hooks/useQueryParam';
 
-import Chance from 'chance';
+import adjectives from '../lib/adjectives';
 
 let voice: SpeechSynthesisVoice | undefined = undefined;
 
@@ -83,7 +83,11 @@ const DrawButton = styled(Button)`
 
 const stopTalking = () => window.speechSynthesis.cancel();
 
-const chance = new Chance();
+const randomSeed = () => {
+  return `${drawItemsFromRandomPoint(1)(adjectives)}${drawItemsFromRandomPoint(1)(
+    words,
+  )}`;
+};
 
 const WordRecall = () => {
   const [wordSet, setWordSet] = useState<string[]>();
@@ -93,7 +97,7 @@ const WordRecall = () => {
     10,
   );
 
-  const [hashFromQuery, setHashFromQuery] = useQueryParam('hash');
+  const [seedFromQuery, setSeedFromQuery] = useQueryParam('seed');
 
   useEffect(() => {
     return () => stopTalking();
@@ -114,13 +118,13 @@ const WordRecall = () => {
   }, [wordSet, speechDelay]);
 
   const handleDrawWords = useCallback(() => {
-    setHashFromQuery(chance.hash({ length: 8 }));
-  }, [setHashFromQuery]);
+    setSeedFromQuery(randomSeed());
+  }, [setSeedFromQuery]);
 
   useEffect(() => {
-    const chosen = drawRandomItemsWithSeed<string>(hashFromQuery, numberOfWords)(words);
+    const chosen = drawRandomItemsWithSeed<string>(seedFromQuery, numberOfWords)(words);
     setWordSet(chosen);
-  }, [hashFromQuery, numberOfWords]);
+  }, [seedFromQuery, numberOfWords]);
 
   const handleNumberChange = ({
     target: { valueAsNumber },

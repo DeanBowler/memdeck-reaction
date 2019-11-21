@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 
 import words from '../lib/words';
 import { drawRandomItemsWithSeed, drawItemsFromRandomPoint } from '../deck-engine/random';
@@ -90,8 +90,7 @@ const randomSeed = () => {
 };
 
 const WordRecall = () => {
-  const [wordSet, setWordSet] = useState<string[]>();
-  const [speechDelay, setSpeechDelay] = useState(2);
+  const [speechDelay, setSpeechDelay] = useLocalStorage('word-recall:speech-delay', 2);
   const [numberOfWords, setNumberOfWords] = useLocalStorage(
     'word-recall:number-of-words',
     10,
@@ -99,9 +98,14 @@ const WordRecall = () => {
 
   const [seedFromQuery, setSeedFromQuery] = useQueryParam('seed');
 
+  const wordSet = useMemo(
+    () => drawRandomItemsWithSeed<string>(seedFromQuery, numberOfWords)(words),
+    [seedFromQuery, numberOfWords],
+  );
+
   useEffect(() => {
     return () => stopTalking();
-  }, [wordSet, speechDelay]);
+  }, [seedFromQuery, speechDelay]);
 
   const handleSayIt = useCallback(() => {
     stopTalking();
@@ -120,11 +124,6 @@ const WordRecall = () => {
   const handleDrawWords = useCallback(() => {
     setSeedFromQuery(randomSeed());
   }, [setSeedFromQuery]);
-
-  useEffect(() => {
-    const chosen = drawRandomItemsWithSeed<string>(seedFromQuery, numberOfWords)(words);
-    setWordSet(chosen);
-  }, [seedFromQuery, numberOfWords]);
 
   const handleNumberChange = ({
     target: { valueAsNumber },

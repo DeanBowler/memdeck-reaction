@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components/macro';
 import media from 'styled-media-query';
@@ -8,6 +8,7 @@ import './lib/preloadCardFaces';
 import palette from './palette';
 import AppRoutes from './AppRoutes';
 import { APP_TITLE_FONT_FAMILY } from './style';
+import Helmet from 'react-helmet';
 
 const Header = styled.header`
   padding: 1rem 2rem;
@@ -56,23 +57,26 @@ const theme = {
   main: 'mediumseagreen',
 };
 
-class App extends Component {
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <AppContainer>
-          <Header>
-            <HeaderTitle>Memdeck Reaction</HeaderTitle>
-          </Header>
-          <ContentContainer>
-            <BrowserRouter>
-              <AppRoutes />
-            </BrowserRouter>
-          </ContentContainer>
-        </AppContainer>
-      </ThemeProvider>
-    );
-  }
+export default function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <Helmet defaultTitle="Memdeck Reaction" titleTemplate="%s | Memdeck Reaction">
+        <meta name="description" content="A web based trainer for memdeck recall!" />
+        <meta name="theme-color" content="#375e3f" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+      </Helmet>
+      <AppContainer>
+        <Header>
+          <HeaderTitle>Memdeck Reaction</HeaderTitle>
+        </Header>
+        <ContentContainer>
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </ContentContainer>
+      </AppContainer>
+    </ThemeProvider>
+  );
 }
-
-export default App;

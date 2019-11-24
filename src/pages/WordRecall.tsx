@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 
 import words from '../lib/words';
 import { drawRandomItemsWithSeed, drawItemsFromRandomPoint } from '../deck-engine/random';
@@ -10,6 +10,7 @@ import Input from '../components/Input';
 import useQueryParam from '../lib/hooks/useQueryParam';
 
 import adjectives from '../lib/adjectives';
+import Helmet from 'react-helmet';
 
 let voice: SpeechSynthesisVoice | undefined = undefined;
 
@@ -139,6 +140,7 @@ const WordRecall = () => {
 
   return (
     <>
+      <Helmet title="Word Recall" />
       <ActionsContainer>
         <NumberOfWordsInput
           min={0}

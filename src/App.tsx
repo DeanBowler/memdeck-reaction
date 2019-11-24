@@ -12,6 +12,8 @@ import Helmet from 'react-helmet';
 
 const Header = styled.header`
   padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
 
   ${media.lessThan('medium')`
     padding: 0.5rem 1rem;
@@ -27,6 +29,16 @@ const HeaderTitle = styled.div`
   color: ${palette.white};
   opacity: 0.7;
   transition: opacity 300ms ease-in-out;
+
+  :hover {
+    opacity: 0.9;
+  }
+`;
+
+const HeaderLogo = styled.img`
+  opacity: 0.7;
+  width: 32px;
+  margin-right: 1rem;
 
   :hover {
     opacity: 0.9;
@@ -69,6 +81,7 @@ export default function App() {
       </Helmet>
       <AppContainer>
         <Header>
+          <HeaderLogo src="/images/logo--transparent.png" alt="site logo" />
           <HeaderTitle>Memdeck Reaction</HeaderTitle>
         </Header>
         <ContentContainer>

@@ -1,16 +1,17 @@
 import React, { useEffect, useCallback, useMemo } from 'react';
 
-import words from '../lib/words';
-import { drawRandomItemsWithSeed, drawItemsFromRandomPoint } from '../deck-engine/random';
-import styled from 'styled-components/macro';
-import palette from '../palette';
-import Button from '../components/Button';
-import { useLocalStorage } from 'react-use';
-import Input from '../components/Input';
-import useQueryParam from '../lib/hooks/useQueryParam';
-
-import adjectives from '../lib/adjectives';
 import Helmet from 'react-helmet';
+import styled from 'styled-components/macro';
+import media from 'styled-media-query';
+import { useLocalStorage } from 'react-use';
+
+import palette from '../palette';
+import words from '../lib/words';
+import adjectives from '../lib/adjectives';
+import useQueryParam from '../lib/hooks/useQueryParam';
+import { drawRandomItemsWithSeed, drawItemsFromRandomPoint } from '../deck-engine/random';
+import Button from '../components/Button';
+import Input from '../components/Input';
 
 let voice: SpeechSynthesisVoice | undefined = undefined;
 
@@ -39,6 +40,11 @@ const WordContainer = styled.div`
   :hover {
     box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.4);
   }
+
+  ${media.lessThan('medium')`
+    margin: 0.5rem;
+    width: 10rem;
+  `}
 `;
 
 const WordIndex = styled.div`
@@ -46,12 +52,22 @@ const WordIndex = styled.div`
   color: ${palette.white};
   background: rgba(255, 255, 255, 0.1);
   border-right: 1px solid ${palette.white};
+
+  ${media.lessThan('medium')`
+    padding: 0.75rem;
+  `}
 `;
 
 const Word = styled.div`
   padding: 1rem;
   font-size: 1.25rem;
+  word-break: break-all;
   text-transform: capitalize;
+
+  ${media.lessThan('medium')`
+    font-size: 1rem;
+    padding: 0.75rem;
+  `}
 `;
 
 const WordItem = ({ index, word }: WordItemProps) => (

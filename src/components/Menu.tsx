@@ -2,7 +2,6 @@ import React from 'react';
 
 import { useTransition, animated } from 'react-spring';
 import styled from 'styled-components';
-import Button from './Button';
 import media from 'styled-media-query';
 import { NavLink } from 'react-router-dom';
 import palette from '../palette';
@@ -32,6 +31,10 @@ const MenuHeader = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 1rem 2rem;
+
+  ${media.lessThan('medium')`
+    margin: 1rem;
+  `}
 `;
 
 const MenuContent = styled.div``;
@@ -88,7 +91,6 @@ export default function Menu({ isOpen, onCloseClick }: MenuProps) {
                 <MenuHeaderBrandContainer>
                   <HeaderBrand />
                 </MenuHeaderBrandContainer>
-                <Button onClick={onCloseClick}>close</Button>
               </MenuHeader>
               <MenuContent>
                 <nav>
@@ -97,6 +99,14 @@ export default function Menu({ isOpen, onCloseClick }: MenuProps) {
                       <StyledNavLink to="order" onClick={onItemClick}>
                         Deck Order
                         <NavDescription>View all cards in stack order</NavDescription>
+                      </StyledNavLink>
+                    </li>
+                    <li>
+                      <StyledNavLink to="whichis" onClick={onItemClick}>
+                        Which is test
+                        <NavDescription>
+                          Test which card is before/after the shown card
+                        </NavDescription>
                       </StyledNavLink>
                     </li>
                     <li>

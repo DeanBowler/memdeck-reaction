@@ -12,6 +12,7 @@ export default () => (
     <Route path="/order" exact={true} component={DeckOrder} />
     <Route path="/drawfromfan" component={DrawFromFanTrainer} />
     <Route path="/oneshot" component={OneShotTrainer} />
+    <Route path="/whichis" exact={true} component={WhichIsTrainer} />
     <Route path="/wordrecall" exact={true} component={WordRecall} />
   </Switch>
 );

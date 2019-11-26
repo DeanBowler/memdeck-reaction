@@ -5,23 +5,20 @@ import media from 'styled-media-query';
 
 import './lib/preloadCardFaces';
 
-import palette from './palette';
 import AppRoutes from './AppRoutes';
-import { APP_TITLE_FONT_FAMILY } from './style';
 import Helmet from 'react-helmet';
-import Button from './components/Button';
 import Menu from './components/Menu';
 import HeaderBrand from './components/HeaderBrand';
 
 const Header = styled.header`
-  height: 3rem;
+  height: 2rem;
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   ${media.lessThan('medium')`
-    padding: 0.5rem 1rem;
+    padding: 1rem;
   `}
 
   user-select: none;
@@ -45,6 +42,58 @@ const ContentContainer = styled.div`
   ${media.lessThan('small')`
     margin: 0.25rem;
   `}
+`;
+
+// TODO: move this into the menu component... 🤦‍♂️
+const StyledBurger = styled.button<{ open: boolean }>`
+  position: ${({ open }) => (open ? 'absolute' : 'unset')};
+  opacity: 0.75;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+
+  ${media.lessThan('medium')`
+    right: 1rem;
+  `}
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  div {
+    width: 2rem;
+    height: 0.25rem;
+    background: #effffa;
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+
+    :first-child {
+      transform: ${({ open }) => (open ? 'rotate(45deg)' : 'rotate(0)')};
+    }
+
+    :nth-child(2) {
+      opacity: ${({ open }) => (open ? '0' : '1')};
+      transform: ${({ open }) => (open ? 'translateX(20px)' : 'translateX(0)')};
+    }
+
+    :nth-child(3) {
+      transform: ${({ open }) => (open ? 'rotate(-45deg)' : 'rotate(0)')};
+    }
+  }
 `;
 
 const theme = {
@@ -71,7 +120,11 @@ export default function App() {
       <AppContainer>
         <Header>
           <HeaderBrand />
-          <Button onClick={handleMenuToggle}>menu</Button>
+          <StyledBurger open={isMenuOpen} onClick={handleMenuToggle}>
+            <div />
+            <div />
+            <div />
+          </StyledBurger>
         </Header>
         <ContentContainer>
           <BrowserRouter>

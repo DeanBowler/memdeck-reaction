@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components/macro';
 import media from 'styled-media-query';
@@ -9,40 +9,22 @@ import palette from './palette';
 import AppRoutes from './AppRoutes';
 import { APP_TITLE_FONT_FAMILY } from './style';
 import Helmet from 'react-helmet';
+import Button from './components/Button';
+import Menu from './components/Menu';
+import HeaderBrand from './components/HeaderBrand';
 
 const Header = styled.header`
+  height: 3rem;
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   ${media.lessThan('medium')`
     padding: 0.5rem 1rem;
   `}
 
   user-select: none;
-`;
-
-const HeaderTitle = styled.div`
-  font-size: 2rem;
-  line-height: 1em;
-  font-family: ${APP_TITLE_FONT_FAMILY};
-  color: ${palette.white};
-  opacity: 0.7;
-  transition: opacity 300ms ease-in-out;
-
-  :hover {
-    opacity: 0.9;
-  }
-`;
-
-const HeaderLogo = styled.img`
-  opacity: 0.7;
-  width: 32px;
-  margin-right: 1rem;
-
-  :hover {
-    opacity: 0.9;
-  }
 `;
 
 const AppContainer = styled.div`
@@ -70,6 +52,13 @@ const theme = {
 };
 
 export default function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleMenuToggle = () => setIsMenuOpen(!isMenuOpen);
+  const handleMenuCloseClick = () => setIsMenuOpen(false);
+
+  console.log(isMenuOpen);
+
   return (
     <ThemeProvider theme={theme}>
       <Helmet defaultTitle="Memdeck Reaction" titleTemplate="%s | Memdeck Reaction">
@@ -81,12 +70,13 @@ export default function App() {
       </Helmet>
       <AppContainer>
         <Header>
-          <HeaderLogo src="/images/logo--transparent.png" alt="site logo" />
-          <HeaderTitle>Memdeck Reaction</HeaderTitle>
+          <HeaderBrand />
+          <Button onClick={handleMenuToggle}>menu</Button>
         </Header>
         <ContentContainer>
           <BrowserRouter>
             <AppRoutes />
+            <Menu isOpen={isMenuOpen} onCloseClick={handleMenuCloseClick} />
           </BrowserRouter>
         </ContentContainer>
       </AppContainer>

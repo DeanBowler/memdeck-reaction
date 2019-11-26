@@ -1,6 +1,6 @@
 {
   "name": "memdeck-reaction",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "homepage": "https://festive-clarke-5ba03c.netlify.com",
   "dependencies": {
@@ -15,6 +15,7 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "react-spring": "^8.0.27",
     "react-use": "^13.9.0",
     "react-use-gesture": "^6.0.14",
     "source-map-explorer": "^2.1.1",

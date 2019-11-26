@@ -1,14 +1,18 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
+import media from 'styled-media-query';
+import palette from '../palette';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   marginRight?: string;
 }
 
 const StyledButton = styled.button<{ marginRight?: string; marginLeft?: string }>`
+  font-family: 'Raleway', sans-serif;
   cursor: pointer;
-  padding: 0.5rem;
-  color: white;
+  padding: 0.5rem 1rem;
+  opacity: 0.9;
+  color: ${palette.white};
   border: 2px solid rgba(255, 255, 255, 0.8);
   border-radius: 5px;
   background: rgba(0, 0, 0, 0.1);
@@ -20,6 +24,10 @@ const StyledButton = styled.button<{ marginRight?: string; marginLeft?: string }
   transition: all 200ms ease-in-out;
 
   transform: scale(1);
+
+  ${media.greaterThan('medium')`
+    padding: 0.5rem 1.5rem;
+  `};
 
   :hover {
     box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.4);

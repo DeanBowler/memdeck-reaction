@@ -46,7 +46,7 @@ const ContentContainer = styled.div`
 
 // TODO: move this into the menu component... 🤦‍♂️
 const StyledBurger = styled.button<{ open: boolean }>`
-  position: ${({ open }) => (open ? 'absolute' : 'unset')};
+  position: ${({ open }) => (open ? 'fixed' : 'unset')};
   opacity: 0.75;
   right: 2rem;
   display: flex;
@@ -87,7 +87,7 @@ const StyledBurger = styled.button<{ open: boolean }>`
 
     :nth-child(2) {
       opacity: ${({ open }) => (open ? '0' : '1')};
-      transform: ${({ open }) => (open ? 'translateX(20px)' : 'translateX(0)')};
+      transform: ${({ open }) => (open ? 'translateX(-20px)' : 'translateX(0)')};
     }
 
     :nth-child(3) {
@@ -105,8 +105,6 @@ export default function App() {
 
   const handleMenuToggle = () => setIsMenuOpen(!isMenuOpen);
   const handleMenuCloseClick = () => setIsMenuOpen(false);
-
-  console.log(isMenuOpen);
 
   return (
     <ThemeProvider theme={theme}>

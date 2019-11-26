@@ -37,6 +37,7 @@ const CardStackList = styled.div<{ wrapOverflow: boolean; center: boolean }>`
 const CardStackHeader = styled.div`
   display: flex;
   align-items: baseline;
+  flex-wrap: wrap;
   margin-bottom: 0.5rem;
 
   position: sticky;

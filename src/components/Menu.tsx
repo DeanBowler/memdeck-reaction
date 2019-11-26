@@ -18,8 +18,7 @@ const MenuContainer = styled.div`
   width: 420px;
   right: 0;
   bottom: 0;
-  background: linear-gradient(#181b19de, #303630de),
-    url(/images/backgrounds/felt--lowq.jpg);
+  background: linear-gradient(#181b19ee, #303630ee);
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
 
   ${media.lessThan('small')`

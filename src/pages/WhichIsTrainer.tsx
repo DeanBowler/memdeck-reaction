@@ -150,7 +150,6 @@ export default () => {
       : [];
 
   useEventListener<React.KeyboardEvent>('keypress', event => {
-    console.log(event);
     if (event.which === 32) handleStart();
     if (event.which >= 49 && event.which <= 57)
       handleGuessCardClick(secondRowCards[Number.parseInt(event.key) - 1]);

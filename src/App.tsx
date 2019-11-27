@@ -9,13 +9,17 @@ import AppRoutes from './AppRoutes';
 import Helmet from 'react-helmet';
 import Menu from './components/Menu';
 import HeaderBrand from './components/HeaderBrand';
+import Headroom from 'react-headroom';
 
 const Header = styled.header`
+  z-index: 1;
   height: 2rem;
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: linear-gradient(#295631de, #2d5534de),
+    url(/images/backgrounds/felt--lowq.jpg);
 
   ${media.lessThan('medium')`
     padding: 1rem;
@@ -116,14 +120,16 @@ export default function App() {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
       </Helmet>
       <AppContainer>
-        <Header>
-          <HeaderBrand />
-          <StyledBurger open={isMenuOpen} onClick={handleMenuToggle}>
-            <div />
-            <div />
-            <div />
-          </StyledBurger>
-        </Header>
+        <Headroom style={{ boxShadow: '0 5px 5px rgba(0,0,0,0.3)' }}>
+          <Header>
+            <HeaderBrand />
+            <StyledBurger open={isMenuOpen} onClick={handleMenuToggle}>
+              <div />
+              <div />
+              <div />
+            </StyledBurger>
+          </Header>
+        </Headroom>
         <ContentContainer>
           <BrowserRouter>
             <AppRoutes />

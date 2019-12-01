@@ -27,10 +27,16 @@ const grey = {
   white: '#fff',
 };
 
+const shadows = {
+  boxShadow: '0px 5px 0px -1px rgba(0, 0, 0, 0.1)',
+  boxShadowTaller: '0px 8px 0px -2px rgba(0, 0, 0, 0.1)',
+};
+
 export default {
   ...grey,
   ...basePalette,
   ...primaryPalette,
   ...positivePalette,
   ...negativePalette,
+  ...shadows,
 };

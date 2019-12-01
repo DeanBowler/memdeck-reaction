@@ -1,16 +1,12 @@
 import * as React from 'react';
-import { DeckModel, newTamariz, CardModel, pass, shuffle } from '../deck-engine';
-import styled from 'styled-components/macro';
-import Button from '../components/Button';
+import { Helmet } from 'react-helmet';
 import { symmetricDifference, last, takeLast } from 'ramda';
-import Input from '../components/Input';
-import CardStack from '../components/CardStack';
 
-const ActionsContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 0.5rem;
-`;
+import { DeckModel, newTamariz, CardModel, pass, shuffle } from 'src/deck-engine';
+import ActionsContainer from 'src/components/ActionsContainer';
+import Button from 'src/components/Button';
+import CardStack from 'src/components/CardStack';
+import Input from 'src/components/Input';
 
 export interface DrawFromFanProps {}
 
@@ -84,6 +80,7 @@ export default class DrawFromFanTrainer extends React.Component<
 
     return (
       <div>
+        <Helmet title="Draw from fan" />
         <ActionsContainer>
           <Button onClick={this.reset} marginRight="1em">
             Reset

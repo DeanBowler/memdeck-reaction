@@ -120,8 +120,6 @@ const CardStack = ({
     initialCardScale,
   );
 
-  //const [cardScale, setCardScale] = useState(initialCardScale);
-
   useEffect(() => {
     const { current: scrollableEl } = scrollableRef;
 

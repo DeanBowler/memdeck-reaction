@@ -2,11 +2,12 @@ import React, { useState, useCallback } from 'react';
 import { symmetricDifference } from 'ramda';
 import styled from 'styled-components/macro';
 
-import { newTamariz, CardModel } from '../deck-engine';
-import { drawItemsFromRandomPoint } from '../deck-engine/random';
-import Button from '../components/Button';
-import CardStack from '../components/CardStack';
-import Input from '../components/Input';
+import { newTamariz, CardModel } from 'src/deck-engine';
+import { drawItemsFromRandomPoint } from 'src/deck-engine/random';
+import ActionsContainer from 'src/components/ActionsContainer';
+import Button from 'src/components/Button';
+import CardStack from 'src/components/CardStack';
+import Input from 'src/components/Input';
 
 const tamarizDeck = newTamariz();
 
@@ -17,11 +18,6 @@ const OneShotTrainerContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-`;
-
-const ActionsContainer = styled.div`
-  display: flex;
-  justify-content: center;
 `;
 
 const OneShotTrainer = () => {

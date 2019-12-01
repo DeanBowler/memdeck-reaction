@@ -1,10 +1,11 @@
 import React from 'react';
 
 import { useTransition, animated } from 'react-spring';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import media from 'styled-media-query';
-import { NavLink } from 'react-router-dom';
-import palette from '../palette';
+
+import palette from 'src/style/palette';
 import HeaderBrand from './HeaderBrand';
 
 interface MenuProps {
@@ -18,7 +19,7 @@ const MenuContainer = styled.div`
   width: 420px;
   right: 0;
   bottom: 0;
-  background: linear-gradient(#181b19ee, #303630ee);
+  background: linear-gradient(#3a423dee, #415f41f2);
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
 
   ${media.lessThan('small')`
@@ -130,6 +131,12 @@ export default function Menu({ isOpen, onCloseClick }: MenuProps) {
                         <NavDescription>
                           Trainer for committing object names to memory
                         </NavDescription>
+                      </StyledNavLink>
+                    </li>
+                    <li>
+                      <StyledNavLink to="settings" onClick={onItemClick}>
+                        Settings
+                        <NavDescription>Tweak settings</NavDescription>
                       </StyledNavLink>
                     </li>
                   </NavList>

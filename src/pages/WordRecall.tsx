@@ -5,13 +5,18 @@ import styled from 'styled-components/macro';
 import media from 'styled-media-query';
 import { useLocalStorage } from 'react-use';
 
-import palette from '../palette';
-import words from '../lib/words';
-import adjectives from '../lib/adjectives';
-import useQueryParam from '../lib/hooks/useQueryParam';
-import { drawRandomItemsWithSeed, drawItemsFromRandomPoint } from '../deck-engine/random';
-import Button from '../components/Button';
-import Input from '../components/Input';
+import palette from 'src/style/palette';
+import words from 'src/lib/words';
+import adjectives from 'src/lib/adjectives';
+import useQueryParam from 'src/lib/hooks/useQueryParam';
+import {
+  drawRandomItemsWithSeed,
+  drawItemsFromRandomPoint,
+} from 'src/deck-engine/random';
+import Button from 'src/components/Button';
+import Input from 'src/components/Input';
+import { BoxMixin } from 'src/style/common';
+import ActionsContainer from 'src/components/ActionsContainer';
 
 let voice: SpeechSynthesisVoice | undefined = undefined;
 
@@ -25,23 +30,27 @@ interface WordItemProps {
 }
 
 const WordContainer = styled.div`
-  user-select: none;
-  color: ${palette.white};
-  margin: 1rem;
-  border: 2px solid ${palette.white};
-  border-radius: 5px;
   display: flex;
+  user-select: none;
+  margin: 1rem;
   width: 15rem;
+  ${BoxMixin};
+  padding: 0;
 
   transition: box-shadow 100ms ease-in-out;
 
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: ${palette.boxShadow};
 
   :hover {
-    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: ${palette.boxShadowTaller};
   }
 
+  ${media.greaterThan('medium')`
+    padding: 0;
+  `}
+
   ${media.lessThan('medium')`
+    padding: 0;
     margin: 0.5rem;
     width: 10rem;
   `}
@@ -51,7 +60,7 @@ const WordIndex = styled.div`
   padding: 1rem;
   color: ${palette.white};
   background: rgba(255, 255, 255, 0.1);
-  border-right: 1px solid ${palette.white};
+  border-radius: 5px 0 0 5px;
 
   ${media.lessThan('medium')`
     padding: 0.75rem;
@@ -82,12 +91,6 @@ const WordSetContainer = styled.div`
   flex-wrap: wrap;
   margin: 1rem 0;
   justify-content: center;
-`;
-
-const ActionsContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 0.5rem;
 `;
 
 const NumberOfWordsInput = styled(Input)`

@@ -2,15 +2,20 @@ import React, { useState, useCallback, useMemo, useEffect } from 'react';
 
 import useEventListener from '@use-it/event-listener';
 import { differenceInMilliseconds } from 'date-fns';
+import { useLocalStorage } from 'react-use';
+import { Helmet } from 'react-helmet';
 import styled from 'styled-components/macro';
 
-import palette from '../palette';
-import { newTamariz, CardModel, shuffle } from '../deck-engine';
-import { drawItemsFromRandomPoint } from '../deck-engine/random';
-import CardStack from '../components/CardStack';
-import Button from '../components/Button';
-import Input from '../components/Input';
-import { useLocalStorage } from 'react-use';
+import palette from 'src/style/palette';
+import {
+  newTamariz,
+  CardModel,
+  shuffle,
+  drawItemsFromRandomPoint,
+} from 'src/deck-engine';
+import Button from 'src/components/Button';
+import CardStack from 'src/components/CardStack';
+import Input from 'src/components/Input';
 
 interface WhichIsQuestion {
   direction: 'previous' | 'next';
@@ -161,6 +166,7 @@ export default () => {
 
   return (
     <WhichIsTrainerContainer>
+      <Helmet title="Which is...?" />
       <CardStack
         name="which_is:question"
         shownCards={currentQuestion ? [currentQuestion.clue] : []}

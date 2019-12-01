@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { CardModel, cardModelToPath } from '../deck-engine';
 import styled from 'styled-components/macro';
-import palette from '../palette';
+
+import { CardModel, cardModelToPath } from 'src/deck-engine';
+import palette from 'src/style/palette';
 
 const DEFAULT_SIZE = { width: 125, height: 180 };
 
@@ -17,7 +18,7 @@ const CardContainer = styled.div`
   padding: 2px;
   border: 1px solid ${palette.grey90};
   height: 180px;
-  box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: ${palette.boxShadow};
   width: 125px;
 `;
 

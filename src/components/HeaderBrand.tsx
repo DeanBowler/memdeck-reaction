@@ -1,8 +1,8 @@
 import React from 'react';
 
 import styled from 'styled-components';
-import { APP_TITLE_FONT_FAMILY } from '../style';
-import palette from '../palette';
+import { APP_TITLE_FONT_FAMILY } from 'src/style';
+import palette from 'src/style/palette';
 
 const HeaderBrandContainer = styled.div`
   display: flex;

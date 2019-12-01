@@ -1,6 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
 
+import { BoxMixin } from 'src/style/common';
+import palette from 'src/style/palette';
+
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   marginRight?: string;
 }
@@ -8,19 +11,19 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const StyledInput = styled.input`
   cursor: pointer;
   padding: 0.5rem;
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  border-radius: 5px;
-  background: rgba(0, 0, 0, 0.1);
+
+  ${BoxMixin}
   transition: background 100ms ease-in-out;
   font-size: 1rem;
 
+  box-shadow: ${palette.boxShadow};
+
   :hover {
-    box-shadow: inset 2px 2px 20px rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.3);
   }
 
   :focus {
-    outline: none;
+    outline: 2px solid rgba(255, 255, 255, 0.3);
   }
 `;
 

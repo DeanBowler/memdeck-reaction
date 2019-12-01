@@ -1,9 +1,10 @@
 import * as React from 'react';
+import styled from 'styled-components/macro';
+
+import { cardColor, isCourtCard, CardModel, CardSuit } from 'src/deck-engine';
+import palette from 'src/style/palette';
 import { CardProps } from './Card';
 import FlippinCard, { FlippinCardProps } from './FlippinCard';
-import styled from 'styled-components/macro';
-import { cardColor, isCourtCard, CardModel, CardSuit } from '../deck-engine';
-import palette from '../palette';
 
 export interface HintableCardProps extends CardProps, FlippinCardProps {}
 

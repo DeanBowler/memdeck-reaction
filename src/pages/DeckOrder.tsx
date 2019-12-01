@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { symmetricDifference } from 'ramda';
+import { Helmet } from 'react-helmet';
 
-import { newTamariz, CardModel } from '../deck-engine';
-import CardStack from '../components/CardStack';
-import Button from '../components/Button';
+import { newTamariz, CardModel } from 'src/deck-engine';
+import Button from 'src/components/Button';
+import CardStack from 'src/components/CardStack';
 
 interface DeckOrderState {
   shown: CardModel[];
@@ -31,22 +32,26 @@ class DeckOrder extends React.Component<{}, DeckOrderState> {
 
   render() {
     return (
-      <CardStack
-        title="Mnemonica Stack Order"
-        cards={this.deck}
-        shownCards={this.state.shown}
-        onCardClick={this.handleCardClick}
-        wrapOverflow={true}
-        // cardAdaptors={[withOrderDisplay]}
-        actions={
-          <>
-            <Button onClick={this.revealAll} marginRight="5px">
-              Reveal All
-            </Button>
-            <Button onClick={this.hideAll}>Hide All</Button>
-          </>
-        }
-      />
+      <>
+        <Helmet title="Stack order" />
+        <CardStack
+          title="Mnemonica Stack Order"
+          cards={this.deck}
+          shownCards={this.state.shown}
+          onCardClick={this.handleCardClick}
+          wrapOverflow={true}
+          center={true}
+          // cardAdaptors={[withOrderDisplay]}
+          actions={
+            <>
+              <Button onClick={this.revealAll} marginRight="5px">
+                Reveal All
+              </Button>
+              <Button onClick={this.hideAll}>Hide All</Button>
+            </>
+          }
+        />
+      </>
     );
   }
 }

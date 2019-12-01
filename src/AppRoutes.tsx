@@ -5,6 +5,7 @@ import DeckOrder from './pages/DeckOrder';
 import OneShotTrainer from './pages/OneShotTrainer';
 import WhichIsTrainer from './pages/WhichIsTrainer';
 import WordRecall from './pages/WordRecall';
+import Settings from './pages/Settings';
 
 export default () => (
   <Switch>
@@ -14,5 +15,6 @@ export default () => (
     <Route path="/oneshot" component={OneShotTrainer} />
     <Route path="/whichis" exact={true} component={WhichIsTrainer} />
     <Route path="/wordrecall" exact={true} component={WordRecall} />
+    <Route path="/settings" exact={true} component={Settings} />
   </Switch>
 );

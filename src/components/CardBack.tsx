@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
-import palette from '../palette';
+import palette from '../style/palette';
+import { useSetting } from 'src/contexts/SettingsContext';
 
 const CardContainer = styled.div`
   display: flex;
@@ -8,14 +9,18 @@ const CardContainer = styled.div`
   border-radius: 8px;
   padding: 2px;
   border: 1px solid ${palette.grey90};
-  box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: ${palette.boxShadow};
 `;
 
-const CardPattern = styled.div`
+interface CardPatternProps {
+  backImage: string;
+}
+
+const CardPattern = styled.div<CardPatternProps>`
   flex: 1 1 auto;
 
   border-radius: 5px;
-  background: ${palette.primary} url('/images/card-backs/eye--aubergine.png');
+  background: ${palette.primary} url('/images/card-backs/${p => p.backImage}.jpg');
   background-size: cover;
   margin: 5px;
 `;
@@ -23,6 +28,7 @@ const CardPattern = styled.div`
 const DEFAULT_SIZE = { width: 125, height: 180 };
 export interface CardBackProps {
   scale?: number;
+  backImage?: string;
 }
 
 const getScaledSize = (scale?: number) => ({
@@ -30,10 +36,14 @@ const getScaledSize = (scale?: number) => ({
   height: DEFAULT_SIZE.height * (scale || 1),
 });
 
-const CardBack = ({ scale }: CardBackProps) => (
-  <CardContainer style={getScaledSize(scale)}>
-    <CardPattern />
-  </CardContainer>
-);
+const CardBack = ({ scale, backImage }: CardBackProps) => {
+  const [backImageFromSettings] = useSetting('cardback');
+
+  return (
+    <CardContainer style={getScaledSize(scale)}>
+      <CardPattern backImage={backImage || backImageFromSettings} />
+    </CardContainer>
+  );
+};
 
 export default CardBack;

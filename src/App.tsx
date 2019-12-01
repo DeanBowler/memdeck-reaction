@@ -108,6 +108,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <SettingsContextProvider>
       <Helmet defaultTitle="Memdeck Reaction" titleTemplate="%s | Memdeck Reaction">
         <meta name="description" content="A web based trainer for memdeck recall!" />
         <meta name="theme-color" content="#375e3f" />
@@ -131,6 +132,7 @@ export default function App() {
           </BrowserRouter>
         </ContentContainer>
       </AppContainer>
+      </SettingsContextProvider>
     </ThemeProvider>
   );
 }

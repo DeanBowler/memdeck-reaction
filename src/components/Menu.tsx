@@ -2,8 +2,10 @@ import React from 'react';
 
 import { useTransition, animated } from 'react-spring';
 import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import media from 'styled-media-query';
+import { darken, transparentize } from 'polished';
+import { compose } from 'ramda';
 
 import palette from 'src/style/palette';
 import HeaderBrand from './HeaderBrand';
@@ -13,13 +15,19 @@ interface MenuProps {
   onCloseClick(): void;
 }
 
+const colorProcess = compose(darken(0.1), transparentize(0.05));
+
 const MenuContainer = styled.div`
   position: fixed;
   top: 0;
   width: 420px;
   right: 0;
   bottom: 0;
-  background: linear-gradient(#3a423dee, #415f41f2);
+  overflow: auto;
+  background: linear-gradient(
+    ${p => colorProcess(p.theme.background.start)},
+    ${p => colorProcess(p.theme.background.end)}
+  );
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
 
   ${media.lessThan('small')`

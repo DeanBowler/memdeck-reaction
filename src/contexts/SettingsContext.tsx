@@ -3,12 +3,24 @@ import React, { useCallback, useContext } from 'react';
 import { createContext } from 'react';
 import { useLocalStorage } from 'react-use';
 
+export type BackgroundTheme = { start: string; end: string };
+interface Theme {
+  background: BackgroundTheme;
+}
+
 interface Settings {
   cardback: string;
+  theme: Theme;
 }
 
 const INITIAL_SETTINGS: Settings = {
   cardback: 'eye--aubergine',
+  theme: {
+    background: {
+      start: '#295631de',
+      end: '#446f44de',
+    },
+  },
 };
 
 type UpdateSettingsFunc = <K extends keyof Settings>(
@@ -36,12 +48,6 @@ export default function SettingsContextProvider({
 }: SettingContextProviderProps) {
   const [settings, setSettings] = useLocalStorage('settings', INITIAL_SETTINGS);
 
-  // const updateSettings = <K extends keyof Settings>(key: K) => (value: Settings[K]) => {
-  //   const update = { [key]: value };
-  //   setSettings({ ...settings, ...update });
-  //   //}), [settings, setSettings]);
-  // };
-
   const updateSetting = useCallback<UpdateSettingsFunc>(
     key => value => {
       const update = { [key]: value };
@@ -51,7 +57,7 @@ export default function SettingsContextProvider({
   );
 
   const contextValue: SettingsContext = {
-    settings,
+    settings: { ...INITIAL_SETTINGS, ...settings },
     updateSetting,
   };
 

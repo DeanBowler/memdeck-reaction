@@ -3,7 +3,7 @@ import 'src/lib/preloadCardFaces';
 import React, { useState } from 'react';
 import Helmet from 'react-helmet';
 import { BrowserRouter } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components/macro';
+import styled from 'styled-components/macro';
 import media from 'styled-media-query';
 
 import SettingsContextProvider from 'src/contexts/SettingsContext';
@@ -11,6 +11,7 @@ import BurgerButton from 'src/components/BurgerButton';
 import HeaderBrand from 'src/components/HeaderBrand';
 import Menu from 'src/components/Menu';
 import AppRoutes from './AppRoutes';
+import Theme from './contexts/Theme';
 
 const Header = styled.header`
   height: 2rem;
@@ -46,10 +47,6 @@ const ContentContainer = styled.div`
   `}
 `;
 
-const theme = {
-  main: 'mediumseagreen',
-};
-
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -57,15 +54,15 @@ export default function App() {
   const handleMenuCloseClick = () => setIsMenuOpen(false);
 
   return (
-    <ThemeProvider theme={theme}>
-      <SettingsContextProvider>
-        <Helmet defaultTitle="Memdeck Reaction" titleTemplate="%s | Memdeck Reaction">
-          <meta name="description" content="A web based trainer for memdeck recall!" />
-          <meta name="theme-color" content="#375e3f" />
-          <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        </Helmet>
+    <SettingsContextProvider>
+      <Helmet defaultTitle="Memdeck Reaction" titleTemplate="%s | Memdeck Reaction">
+        <meta name="description" content="A web based trainer for memdeck recall!" />
+        <meta name="theme-color" content="#375e3f" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+      </Helmet>
+      <Theme>
         <AppContainer>
           <Header>
             <HeaderBrand />
@@ -78,7 +75,7 @@ export default function App() {
             </BrowserRouter>
           </ContentContainer>
         </AppContainer>
-      </SettingsContextProvider>
-    </ThemeProvider>
+      </Theme>
+    </SettingsContextProvider>
   );
 }

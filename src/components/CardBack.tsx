@@ -22,7 +22,7 @@ const CardPattern = styled.div<CardPatternProps>`
   border-radius: 5px;
   background: ${palette.primary} url('/images/card-backs/${p => p.backImage}.jpg');
   background-size: cover;
-  margin: 5px;
+  margin: 2%;
 `;
 
 const DEFAULT_SIZE = { width: 125, height: 180 };

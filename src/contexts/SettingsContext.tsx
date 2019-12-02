@@ -17,8 +17,8 @@ const INITIAL_SETTINGS: Settings = {
   cardback: 'eye--aubergine',
   theme: {
     background: {
-      start: '#295631de',
-      end: '#446f44de',
+      start: '#295631',
+      end: '#446f44',
     },
   },
 };

@@ -15,13 +15,13 @@ import Theme from './contexts/Theme';
 
 const Header = styled.header`
   height: 2rem;
-  padding: 1rem 2rem;
+  padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  ${media.lessThan('medium')`
-    padding: 1rem;
+  ${media.greaterThan('medium')`
+    padding: 1rem 2rem;
   `}
 
   user-select: none;
@@ -36,14 +36,14 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  margin: 1rem 3rem;
+  margin: 0.25rem;
 
-  ${media.lessThan('medium')`
+  ${media.greaterThan('small')`
     margin: 0.5rem;
   `}
 
-  ${media.lessThan('small')`
-    margin: 0.25rem;
+  ${media.greaterThan('medium')`
+    margin: 1rem 3rem
   `}
 `;
 

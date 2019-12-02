@@ -20,7 +20,7 @@ const colorProcess = compose(darken(0.1), transparentize(0.05));
 const MenuContainer = styled.div`
   position: fixed;
   top: 0;
-  width: 420px;
+  width: 100%;
   right: 0;
   bottom: 0;
   overflow: auto;
@@ -30,18 +30,18 @@ const MenuContainer = styled.div`
   );
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
 
-  ${media.lessThan('small')`
-    width: 100%;
+  ${media.greaterThan('small')`
+    width: 420px;
   `}
 `;
 
 const MenuHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 1rem 2rem;
+  margin: 1rem;
 
-  ${media.lessThan('medium')`
-    margin: 1rem;
+  ${media.greaterThan('medium')`
+    margin: 1rem 2rem;
   `}
 `;
 

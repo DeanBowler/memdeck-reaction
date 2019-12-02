@@ -8,7 +8,7 @@ import palette from 'src/style/palette';
 const StyledBurger = styled.button<{ open: boolean }>`
   position: ${({ open }) => (open ? 'fixed' : 'unset')};
   opacity: 0.6;
-  right: 2rem;
+  right: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -19,9 +19,9 @@ const StyledBurger = styled.button<{ open: boolean }>`
   padding: 0;
   z-index: 10;
 
-  ${media.lessThan('medium')`
-  right: 1rem;
-`}
+  ${media.greaterThan('medium')`
+    right: 2rem;
+  `}
 
   &:hover {
     opacity: 0.8;

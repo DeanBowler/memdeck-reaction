@@ -32,8 +32,9 @@ interface WordItemProps {
 const WordContainer = styled.div`
   display: flex;
   user-select: none;
-  margin: 1rem;
-  width: 15rem;
+
+  margin: 0.5rem;
+  width: 10rem;
   ${BoxMixin};
   padding: 0;
 
@@ -47,35 +48,32 @@ const WordContainer = styled.div`
 
   ${media.greaterThan('medium')`
     padding: 0;
-  `}
-
-  ${media.lessThan('medium')`
-    padding: 0;
-    margin: 0.5rem;
-    width: 10rem;
+    margin: 1rem;
+    width: 15rem;
   `}
 `;
 
 const WordIndex = styled.div`
-  padding: 1rem;
+  padding: 0.75rem;
   color: ${palette.white};
   background: rgba(255, 255, 255, 0.1);
   border-radius: 5px 0 0 5px;
 
-  ${media.lessThan('medium')`
-    padding: 0.75rem;
+  ${media.greaterThan('medium')`
+    padding: 1rem;
   `}
 `;
 
 const Word = styled.div`
-  padding: 1rem;
-  font-size: 1.25rem;
+  font-size: 1rem;
+  padding: 0.75rem;
+
   word-break: break-all;
   text-transform: capitalize;
 
-  ${media.lessThan('medium')`
-    font-size: 1rem;
-    padding: 0.75rem;
+  ${media.greaterThan('medium')`
+    padding: 1rem;
+    font-size: 1.25rem;
   `}
 `;
 

@@ -12,16 +12,17 @@ import { pipe, min, max } from 'ramda';
 import { useLocalStorage } from 'react-use';
 
 const CardStackContainer = styled.div`
-  margin: 0.75rem;
-  padding: 1rem;
+  margin: 0.5rem;
+  padding: 0.5rem;
+
   background: rgba(0, 0, 0, 0.1);
   box-shadow: inset 5px 5px 15px rgba(0, 0, 0, 0.2);
   overflow: auto;
   border-radius: 5px;
 
-  ${media.lessThan('medium')`
-    margin: 0.5rem;
-    padding: 0.5rem;
+  ${media.greaterThan('medium')`
+    margin: 0.75rem;
+    padding: 1rem;
   `}
 `;
 
@@ -38,13 +39,13 @@ const CardStackHeader = styled.div`
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 
   position: sticky;
   left: 0;
 
-  ${media.lessThan('small')`
-      margin-bottom: 0.25rem;
+  ${media.greaterThan('small')`
+      margin-bottom: 0.5rem;
   `}
 `;
 
@@ -71,10 +72,10 @@ const CardStackSubtitle = styled.div`
 const WonkyCardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 1rem;
+  margin: 0.5rem;
 
-  ${media.lessThan('medium')`
-    margin: 0.5rem;
+  ${media.greaterThan('medium')`
+    margin: 1rem;
   `}
 `;
 

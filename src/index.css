@@ -14,9 +14,6 @@ body {
   color: white;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  background: linear-gradient(#295631de, #446f44de),
-    url(/images/backgrounds/felt--lowq.jpg);
 }
 
 h1,

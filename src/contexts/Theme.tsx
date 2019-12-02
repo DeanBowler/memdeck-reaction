@@ -2,6 +2,7 @@ import React from 'react';
 import { useSetting } from './SettingsContext';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { transparentize } from 'polished';
+import Helmet from 'react-helmet';
 
 export default function Theme({ children }: { children: React.ReactNode }) {
   const [theme] = useSetting('theme');
@@ -18,6 +19,9 @@ export default function Theme({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeProvider theme={theme}>
+      <Helmet>
+        <meta name="theme-color" content={theme.background.start} />
+      </Helmet>
       <GlobalStyle />
       {children}
     </ThemeProvider>

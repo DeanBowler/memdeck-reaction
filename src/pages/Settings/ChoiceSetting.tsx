@@ -12,10 +12,15 @@ interface ChoiceSettingProps<TSetting> {
 
 const ChoicesContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  overflow-y: auto;
   background: rgba(0, 0, 0, 0.2);
   padding: 1rem;
   border-radius: 5px;
+
+  &:after {
+    content: '';
+    flex: 0 0 0.5rem;
+  }
 
   & > * {
     margin-right: 1rem;

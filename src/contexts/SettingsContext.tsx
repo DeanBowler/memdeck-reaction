@@ -8,13 +8,17 @@ interface Theme {
   background: BackgroundTheme;
 }
 
+export type FaceStyles = 'normal' | 'simple';
+
 interface Settings {
   cardback: string;
+  faceStyle: FaceStyles;
   theme: Theme;
 }
 
 const INITIAL_SETTINGS: Settings = {
   cardback: 'eye--aubergine',
+  faceStyle: 'normal',
   theme: {
     background: {
       start: '#295631',

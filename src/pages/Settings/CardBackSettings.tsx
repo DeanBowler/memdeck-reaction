@@ -8,9 +8,9 @@ import { SettingsContainer } from './Common';
 import ChoiceSetting from './ChoiceSetting';
 
 const CARD_BACKS = [
+  'eye--aubergine',
   'bicycle--blue',
   'bicycle--red',
-  'eye--aubergine',
   'bicycle-thistle--blue',
 ];
 

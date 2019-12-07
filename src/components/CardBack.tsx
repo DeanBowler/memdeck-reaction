@@ -32,7 +32,7 @@ export interface CardBackProps {
 }
 
 const getScaledSize = (scale?: number) => ({
-  width: DEFAULT_SIZE.width * (scale || 1),
+  minWidth: DEFAULT_SIZE.width * (scale || 1),
   height: DEFAULT_SIZE.height * (scale || 1),
 });
 

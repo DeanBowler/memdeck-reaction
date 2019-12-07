@@ -40,13 +40,13 @@ export function valueName(number: number): string {
   }
 }
 
+export const shortValueName = (value: number) =>
+  pipe(valueName, v => (v.length > 2 ? v[0] : v))(value);
+
 export const friendlyName = (card: CardModel) =>
   `${valueName(card.number)} of ${card.suit}`;
 
 const cardModelToSvgName = (model: CardModel) =>
   `${valueName(model.number)}_of_${suiteName(model.suit)}.svg`;
 
-export const cardModelToPath = pipe(
-  cardModelToSvgName,
-  concat('/images/card-faces/'),
-);
+export const cardModelToPath = pipe(cardModelToSvgName, concat('/images/card-faces/'));

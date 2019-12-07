@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
 
-import { CardModel, cardModelToPath, CardSuit, shortValueName } from 'src/deck-engine';
+import { CardModel, cardModelToPath } from 'src/deck-engine';
 import palette from 'src/style/palette';
 import { FaceStyles, useSetting } from 'src/contexts/SettingsContext';
 import SimpleFace from './SimpleFace';
@@ -19,7 +19,6 @@ const CardContainer = styled.div`
   background: ${palette.grey5} url('/images/card-textures/card-texture_2--lighter.jpg');
   background-size: cover;
   border-radius: 8px;
-  padding: 2px;
   border: 1px solid ${palette.grey90};
   height: 180px;
   box-shadow: ${palette.boxShadow};
@@ -28,7 +27,8 @@ const CardContainer = styled.div`
 
 const CardImage = styled.img`
   display: block;
-  height: 100%;
+  height: 95%;
+  margin: 2.5%;
 `;
 
 const getScaledSize = (scale?: number) => ({

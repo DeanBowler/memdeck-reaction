@@ -12,12 +12,14 @@ export type FaceStyles = 'normal' | 'simple';
 
 interface Settings {
   cardback: string;
+  cardThickness: number;
   faceStyle: FaceStyles;
   theme: Theme;
 }
 
 const INITIAL_SETTINGS: Settings = {
   cardback: 'eye--aubergine',
+  cardThickness: 3,
   faceStyle: 'normal',
   theme: {
     background: {

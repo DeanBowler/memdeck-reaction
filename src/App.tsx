@@ -15,10 +15,14 @@ import Theme from './contexts/Theme';
 
 const Header = styled.header`
   height: 2rem;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  ${media.greaterThan('small')`
+    padding: 1rem;
+  `}
 
   ${media.greaterThan('medium')`
     padding: 1rem 2rem;

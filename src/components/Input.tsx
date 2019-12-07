@@ -6,6 +6,8 @@ import palette from 'src/style/palette';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   marginRight?: string;
+  label?: string;
+  labelStyle?: React.CSSProperties;
 }
 
 const StyledInput = styled.input`
@@ -27,8 +29,18 @@ const StyledInput = styled.input`
   }
 `;
 
-const Input = ({ children, ...rest }: InputProps) => (
-  <StyledInput {...rest}>{children}</StyledInput>
+const StyledLabel = styled.label`
+  font-size: 0.85rem;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Input = ({ children, label, labelStyle: labelStyles, ...rest }: InputProps) => (
+  <StyledLabel style={labelStyles}>
+    {label}
+    <StyledInput {...rest}>{children}</StyledInput>
+  </StyledLabel>
 );
 
 export default Input;

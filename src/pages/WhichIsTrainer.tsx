@@ -58,11 +58,6 @@ const NumberOfDummiesInput = styled(Input)`
   width: 3em;
 `;
 
-const NumberOfFakesText = styled.span`
-  color: rgba(255, 255, 255, 0.8);
-  margin-right: 1em;
-`;
-
 const anyDeck = newTamariz();
 
 const getElapsed = (started: Date, ended = new Date()) =>
@@ -205,15 +200,13 @@ export default () => {
         actions={
           <>
             {!currentQuestion && (
-              <>
-                <NumberOfFakesText># fakes</NumberOfFakesText>
-                <NumberOfDummiesInput
-                  type="number"
-                  min={1}
-                  value={numberOfDummies}
-                  onChange={handleOnDummiesInputChange}
-                />
-              </>
+              <NumberOfDummiesInput
+                type="number"
+                label="No Fakes"
+                min={1}
+                value={numberOfDummies}
+                onChange={handleOnDummiesInputChange}
+              />
             )}
           </>
         }

@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import styled from 'styled-components/macro';
 import media from 'styled-media-query';
 import { useLocalStorage } from 'react-use';
+import { useDebouncedCallback } from 'use-debounce';
 
 import palette from 'src/style/palette';
 import words from 'src/lib/words';
@@ -91,12 +92,8 @@ const WordSetContainer = styled.div`
   justify-content: center;
 `;
 
-const NumberOfWordsInput = styled(Input)`
-  width: 3rem;
-`;
-
 const DrawButton = styled(Button)`
-  flex: 1 1 auto;
+  flex: 1 0 auto;
 `;
 
 const stopTalking = () => window.speechSynthesis.cancel();
@@ -155,30 +152,46 @@ const WordRecall = () => {
     setSpeechDelay(valueAsNumber);
   };
 
+  const [handleSeedInputChange] = useDebouncedCallback(
+    (value: string) => setSeedFromQuery(value),
+    750,
+  );
+
   return (
     <>
       <Helmet title="Word Recall" />
       <ActionsContainer>
-        <NumberOfWordsInput
+        <Input
+          value={seedFromQuery}
+          onChange={e => handleSeedInputChange(e.target.value)}
+          label="Seed"
+        />
+      </ActionsContainer>
+      <ActionsContainer>
+        <Input
           min={0}
           type="number"
           defaultValue={numberOfWords}
           onInput={handleNumberChange}
+          label="No of words"
+          labelStyle={{ width: '6rem', flex: '0 1 auto' }}
         />
         <DrawButton onClick={handleDrawWords}>Change Words</DrawButton>
       </ActionsContainer>
       <WordSetContainer>
         {wordSet &&
           wordSet.map((word, index) => (
-            <WordItem key={word + index} {...{ word, index }} />
+            <WordItem key={`${word}-${index}`} {...{ word, index }} />
           ))}
       </WordSetContainer>
       <ActionsContainer>
-        <NumberOfWordsInput
+        <Input
+          label="Speech delay"
           min={0}
           type="number"
           defaultValue={speechDelay}
           onInput={handleDelayChange}
+          labelStyle={{ width: '6rem', flex: '0 1 auto' }}
         />
         <DrawButton onClick={handleSayIt}>Say it!</DrawButton>
         <DrawButton onClick={stopTalking}>Shh...</DrawButton>

@@ -22,7 +22,8 @@
     "source-map-explorer": "^2.1.1",
     "styled-components": "^4.4.1",
     "styled-media-query": "^2.1.2",
-    "typescript": "3.7.2"
+    "typescript": "3.7.2",
+    "use-debounce": "^3.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

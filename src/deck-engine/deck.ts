@@ -1,15 +1,8 @@
-import { range } from 'ramda';
-
-import { CardSuit, CardModel } from './card';
+import { CardModel, allSuits, allNumbers } from './card';
 
 export type DeckModel = CardModel[];
 
-export const newDeck: () => DeckModel = () => {
-  const allSuits = [CardSuit.Clubs, CardSuit.Diamonds, CardSuit.Hearts, CardSuit.Spades];
-  const allNumbers = range(1, 14);
-
-  return allSuits.flatMap(s => allNumbers.map(n => ({ suit: s, number: n })));
-};
+export const newDeck: () => DeckModel = () => allSuits.flatMap(s => allNumbers.map(n => ({ suit: s, number: n })));
 
 export const shuffle = (deck: DeckModel) => {
   const unshuffled = deck.slice(0);

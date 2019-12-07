@@ -12,10 +12,12 @@ import {
   CardModel,
   shuffle,
   drawItemsFromRandomPoint,
+  areEqual,
 } from 'src/deck-engine';
 import Button from 'src/components/Button';
 import CardStack from 'src/components/CardStack';
 import Input from 'src/components/Input';
+import SuitAndValueSelector from '../components/SuitAndValueSelector';
 
 interface WhichIsQuestion {
   direction: 'previous' | 'next';
@@ -125,9 +127,9 @@ export default () => {
   }, [numberOfDummies]);
 
   const handleGuessCardClick = useCallback(
-    (card: CardModel) => {
+    (guess: CardModel) => {
       if (!currentQuestion || answeredTime) return;
-      const correct = currentQuestion.answer === card;
+      const correct = areEqual(currentQuestion.answer, guess);
 
       const time = new Date();
 
@@ -188,29 +190,13 @@ export default () => {
           )}
         </div>
       </ToolsContainer>
-      <CardStack
-        name="which_is:guesses"
-        title={nextOrPreviousText}
-        shownCards={shownSecondRow}
-        cards={secondRowCards}
-        initialCardScale={1}
-        onCardClick={handleGuessCardClick}
-        center={true}
-        wrapOverflow={true}
-        actions={
-          <>
-            {!currentQuestion && (
-              <NumberOfDummiesInput
-                type="number"
-                label="No Fakes"
-                min={1}
-                value={numberOfDummies}
-                onChange={handleOnDummiesInputChange}
-              />
-            )}
-          </>
-        }
-      />
+      <SuitAndValueSelector onSelected={handleGuessCardClick} />
+      {/* <CardStack
+          shownCards={shownSecondRow}
+          cards={secondRowCards}
+          cardScale={1.25}
+          onCardClick={handleGuessCardClick}
+        /> */}
     </WhichIsTrainerContainer>
   );
 };

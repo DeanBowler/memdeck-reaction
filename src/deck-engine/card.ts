@@ -1,4 +1,4 @@
-import { pipe, concat } from 'ramda';
+import { pipe, concat, range } from 'ramda';
 
 export enum CardSuit {
   Clubs = 'clubs',
@@ -11,6 +11,15 @@ export enum CardColor {
   Red = 'red',
   Black = 'black',
 }
+
+export const allSuits = [
+    CardSuit.Clubs,
+    CardSuit.Diamonds,
+    CardSuit.Hearts,
+    CardSuit.Spades,
+];
+
+export const allNumbers = range(1, 14);
 
 export interface CardModel {
   suit: CardSuit;
@@ -42,6 +51,9 @@ export function valueName(number: number): string {
 
 export const shortValueName = (value: number) =>
   pipe(valueName, v => (v.length > 2 ? v[0] : v))(value);
+
+export const areEqual = (one: CardModel, two: CardModel) =>
+    one === two || (one.number === two.number && one.suit === two.suit);
 
 export const friendlyName = (card: CardModel) =>
   `${valueName(card.number)} of ${card.suit}`;

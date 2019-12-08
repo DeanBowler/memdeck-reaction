@@ -6,12 +6,14 @@ import palette from 'src/style/palette';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   marginRight?: string;
+  slim?: boolean;
 }
 
-const StyledButton = styled.button<{ marginRight?: string; marginLeft?: string }>`
+type StyledButtonProps = { marginRight?: string; marginLeft?: string; slim?: boolean };
+
+const StyledButton = styled.button<StyledButtonProps>`
   font-family: 'Raleway', sans-serif;
   cursor: pointer;
-  padding: 0.5rem 1rem;
   opacity: 0.9;
   ${BoxMixin}
   font-size: 1rem;
@@ -20,6 +22,8 @@ const StyledButton = styled.button<{ marginRight?: string; marginLeft?: string }
 
   box-shadow: ${palette.boxShadow};
   transition: all 200ms ease-in-out;
+
+  ${p => p.slim && 'padding: 0.5rem!important'};
 
   transform: scale(1);
 

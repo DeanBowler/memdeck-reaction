@@ -19,7 +19,7 @@ interface Settings {
 
 const INITIAL_SETTINGS: Settings = {
   cardback: 'eye--aubergine',
-  cardThickness: 3,
+  cardThickness: 4,
   faceStyle: 'normal',
   theme: {
     background: {
@@ -43,7 +43,7 @@ const INITIAL_CONTEXT: SettingsContext = {
   updateSetting: () => () => undefined,
 };
 
-const SettingsContext = createContext<SettingsContext>(INITIAL_CONTEXT);
+const SettingsContext = createContext(INITIAL_CONTEXT);
 
 interface SettingContextProviderProps {
   children: React.ReactNode;

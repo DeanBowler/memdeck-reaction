@@ -1,6 +1,6 @@
 import 'src/lib/preloadCardFaces';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Helmet from 'react-helmet';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components/macro';
@@ -12,6 +12,7 @@ import HeaderBrand from 'src/components/HeaderBrand';
 import Menu from 'src/components/Menu';
 import AppRoutes from './AppRoutes';
 import Theme from './contexts/Theme';
+import { SnackbarContextProvider, useSnackbar } from './components/Snackbar';
 
 const Header = styled.header`
   height: 2rem;
@@ -51,6 +52,18 @@ const ContentContainer = styled.div`
   `}
 `;
 
+function UpdateWatcher() {
+  const { add } = useSnackbar();
+  window.addEventListener('newContentAvailable', () =>
+    add({
+      text: 'A new version of the app is ready!',
+      actions: [{ text: 'Reload', action: () => window.location.reload(true) }],
+    }),
+  );
+
+  return <></>;
+}
+
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -66,18 +79,21 @@ export default function App() {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
       </Helmet>
       <Theme>
-        <AppContainer>
-          <Header>
-            <HeaderBrand />
-            <BurgerButton isActive={isMenuOpen} onClick={handleMenuToggle} />
-          </Header>
-          <ContentContainer>
-            <BrowserRouter>
-              <AppRoutes />
-              <Menu isOpen={isMenuOpen} onCloseClick={handleMenuCloseClick} />
-            </BrowserRouter>
-          </ContentContainer>
-        </AppContainer>
+        <SnackbarContextProvider>
+          <UpdateWatcher />
+          <AppContainer>
+            <Header>
+              <HeaderBrand />
+              <BurgerButton isActive={isMenuOpen} onClick={handleMenuToggle} />
+            </Header>
+            <ContentContainer>
+              <BrowserRouter>
+                <AppRoutes />
+                <Menu isOpen={isMenuOpen} onCloseClick={handleMenuCloseClick} />
+              </BrowserRouter>
+            </ContentContainer>
+          </AppContainer>
+        </SnackbarContextProvider>
       </Theme>
     </SettingsContextProvider>
   );

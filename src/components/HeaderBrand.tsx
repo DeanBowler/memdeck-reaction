@@ -1,12 +1,21 @@
 import React from 'react';
 
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { APP_TITLE_FONT_FAMILY } from 'src/style';
 import palette from 'src/style/palette';
+import { NavLink } from 'react-router-dom';
 
-const HeaderBrandContainer = styled.div`
+const HeaderBrandContainer = styled(NavLink)`
   display: flex;
   align-items: center;
+  opacity: 0.7;
+  transition: opacity 300ms ease-in-out;
+
+  text-decoration: none;
+
+  :hover {
+    opacity: 0.9;
+  }
 `;
 
 const HeaderTitle = styled.div`
@@ -14,26 +23,15 @@ const HeaderTitle = styled.div`
   line-height: 1em;
   font-family: ${APP_TITLE_FONT_FAMILY};
   color: ${palette.white};
-  opacity: 0.7;
-  transition: opacity 300ms ease-in-out;
-
-  :hover {
-    opacity: 0.9;
-  }
 `;
 
 const HeaderLogo = styled.img`
-  opacity: 0.7;
   width: 32px;
   margin-right: 1rem;
-
-  :hover {
-    opacity: 0.9;
-  }
 `;
 
 const HeaderBrand = () => (
-  <HeaderBrandContainer>
+  <HeaderBrandContainer to="">
     <HeaderLogo src="/images/logo--transparent.png" alt="site logo" />
     <HeaderTitle>Memdeck Reaction</HeaderTitle>
   </HeaderBrandContainer>

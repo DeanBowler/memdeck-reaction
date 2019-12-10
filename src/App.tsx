@@ -1,6 +1,6 @@
 import 'src/lib/preloadCardFaces';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Helmet from 'react-helmet';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components/macro';
@@ -81,18 +81,18 @@ export default function App() {
       <Theme>
         <SnackbarContextProvider>
           <UpdateWatcher />
-          <AppContainer>
-            <Header>
-              <HeaderBrand />
-              <BurgerButton isActive={isMenuOpen} onClick={handleMenuToggle} />
-            </Header>
-            <ContentContainer>
-              <BrowserRouter>
+          <BrowserRouter>
+            <AppContainer>
+              <Header>
+                <HeaderBrand />
+                <BurgerButton isActive={isMenuOpen} onClick={handleMenuToggle} />
+              </Header>
+              <ContentContainer>
                 <AppRoutes />
                 <Menu isOpen={isMenuOpen} onCloseClick={handleMenuCloseClick} />
-              </BrowserRouter>
-            </ContentContainer>
-          </AppContainer>
+              </ContentContainer>
+            </AppContainer>
+          </BrowserRouter>
         </SnackbarContextProvider>
       </Theme>
     </SettingsContextProvider>

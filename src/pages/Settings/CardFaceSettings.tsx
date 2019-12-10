@@ -31,7 +31,11 @@ export default function CardFaceSettings() {
         onChoiceClick={handlePreviewClick}
         renderChoice={cb => (
           <CardFacePreview onClick={() => handlePreviewClick(cb)}>
-            <Card model={{ number: 1, suit: CardSuit.Clubs }} faceStyle={cb} />
+            <Card
+              scale={0.85}
+              model={{ number: 1, suit: CardSuit.Clubs }}
+              faceStyle={cb}
+            />
           </CardFacePreview>
         )}
       />

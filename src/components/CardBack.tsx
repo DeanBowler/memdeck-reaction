@@ -44,7 +44,7 @@ const CardBack = ({ scale, backImage, thickness }: CardBackProps) => {
   return (
     <CardContainer style={getScaledSize(scale)}>
       <CardPattern
-        thickness={thickness !== undefined ? thickness : thicknessFromSettings}
+        thickness={thickness ?? thicknessFromSettings}
         backImage={backImage || backImageFromSettings}
       />
     </CardContainer>

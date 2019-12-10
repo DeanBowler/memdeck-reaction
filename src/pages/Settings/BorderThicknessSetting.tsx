@@ -30,7 +30,7 @@ export default function CardBackSettings() {
         onChoiceClick={handlePreviewClick}
         renderChoice={t => (
           <CardBackPreview onClick={() => handlePreviewClick(t)}>
-            <CardBack thickness={t} />
+            <CardBack scale={0.85} thickness={t} />
           </CardBackPreview>
         )}
       />

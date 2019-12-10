@@ -8,3 +8,8 @@
   for = "*.svg" # cache images
   [headers.values]
     Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/index.html" # cache images
+  [headers.values]
+    Cache-Control = "max-age=0,no-cache,no-store,must-revalidate"

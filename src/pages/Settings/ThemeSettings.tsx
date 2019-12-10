@@ -1,26 +1,17 @@
 import React from 'react';
+import styled from 'styled-components/macro';
+
 import { useSetting, BackgroundTheme } from 'src/contexts/SettingsContext';
 import { SettingsContainer } from './Common';
-import styled from 'styled-components/macro';
 import ChoiceSetting from './ChoiceSetting';
 
 const backgrounds = [
-  {
-    start: '#1a3a20',
-    end: '#446f44',
-  },
-  {
-    start: '#412956',
-    end: '#6f4444',
-  },
-  {
-    start: '#294b56',
-    end: '#4c446f',
-  },
-  {
-    start: '#131313',
-    end: '#3f3f3f',
-  },
+  { name: "dealer's green", start: '#1a3a20', end: '#446f44' },
+  { name: 'sunset', start: '#412956', end: '#6f4444' },
+  { name: 'under the sea', start: '#294b56', end: '#4c446f' },
+  { name: "dealer's black", start: '#131313', end: '#3f3f3f' },
+  { name: "dealer's blood", start: '#772424', end: '#352222' },
+  { name: 'fields of wheat', start: '#626c2e', end: '#355b48' },
 ];
 
 const BackgroundPicker = styled.div<{ start: string; end: string }>`

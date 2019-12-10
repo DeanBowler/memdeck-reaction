@@ -1,10 +1,9 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useEffect, useCallback, useMemo, useState } from 'react';
 
 import Helmet from 'react-helmet';
 import styled from 'styled-components/macro';
 import media from 'styled-media-query';
-import { useLocalStorage } from 'react-use';
-import { useDebouncedCallback } from 'use-debounce';
+import { useLocalStorage, useDebounce } from 'react-use';
 
 import palette from 'src/style/palette';
 import words from 'src/lib/words';
@@ -49,7 +48,7 @@ const WordContainer = styled.div`
 
   ${media.greaterThan('medium')`
     padding: 0;
-    margin: 1rem;
+    margin: 0.75rem;
     width: 15rem;
   `}
 `;
@@ -112,15 +111,28 @@ const WordRecall = () => {
   );
 
   const [seedFromQuery, setSeedFromQuery] = useQueryParam('seed');
+  const [seedInputValue, setSeedInputValue] = useState(seedFromQuery);
+
+  useEffect(() => {
+    if (seedFromQuery !== seedInputValue) setSeedInputValue(seedFromQuery);
+  }, [seedFromQuery]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useDebounce(
+    () => {
+      if (seedFromQuery !== seedInputValue) setSeedFromQuery(seedInputValue);
+    },
+    500,
+    [seedInputValue],
+  );
 
   const wordSet = useMemo(
-    () => drawRandomItemsWithSeed<string>(seedFromQuery, numberOfWords)(words),
-    [seedFromQuery, numberOfWords],
+    () => drawRandomItemsWithSeed<string>(seedInputValue, numberOfWords)(words),
+    [seedInputValue, numberOfWords],
   );
 
   useEffect(() => {
     return () => stopTalking();
-  }, [seedFromQuery, speechDelay]);
+  }, [seedInputValue, speechDelay]);
 
   const handleSayIt = useCallback(() => {
     stopTalking();
@@ -152,18 +164,19 @@ const WordRecall = () => {
     setSpeechDelay(valueAsNumber);
   };
 
-  const [handleSeedInputChange] = useDebouncedCallback(
-    (value: string) => setSeedFromQuery(value),
-    750,
-  );
+  const handleSeedInputChange = ({
+    target: { value },
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    setSeedInputValue(value);
+  };
 
   return (
     <>
       <Helmet title="Word Recall" />
       <ActionsContainer>
         <Input
-          value={seedFromQuery}
-          onChange={e => handleSeedInputChange(e.target.value)}
+          value={seedInputValue || ''}
+          onChange={handleSeedInputChange}
           label="Seed"
         />
       </ActionsContainer>

@@ -98,9 +98,9 @@ const DrawButton = styled(Button)`
 const stopTalking = () => window.speechSynthesis.cancel();
 
 const randomSeed = () => {
-  return `${drawItemsFromRandomPoint(1)(adjectives)}${drawItemsFromRandomPoint(1)(
-    words,
-  )}`;
+  return `${drawItemsFromRandomPoint(1)(adjectives)[0]}${
+    drawItemsFromRandomPoint(1)(words)[0]
+  }`;
 };
 
 const WordRecall = () => {

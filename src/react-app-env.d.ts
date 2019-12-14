@@ -5,5 +5,6 @@ declare namespace NodeJS {
     readonly PUBLIC_URL: string;
     /* LogRocket project key */
     readonly REACT_APP_LOGROCKET_KEY: string;
+    readonly REACT_APP_VERSION: string;
   }
 }

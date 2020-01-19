@@ -7,3 +7,13 @@ cache:
 script:
   - npm test
   - npm run build
+
+deploy:
+  provider: netlify
+  site: $netlify_site
+  auth: $netlify_auth
+  edge: true # opt in to dpl v2
+  dir: build
+  prod: true
+  on:
+    branch: master

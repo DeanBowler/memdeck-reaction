@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@types/chance": "^1.0.8",
-    "@types/jest": "24.9.0",
+    "@types/jest": "25.1.0",
     "@types/logrocket-react": "^3.0.0",
     "@types/node": "13.1.7",
     "@types/ramda": "^0.26.39",

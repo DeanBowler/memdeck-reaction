@@ -52,7 +52,7 @@
     "@types/chance": "^1.0.8",
     "@types/jest": "24.9.0",
     "@types/logrocket-react": "^3.0.0",
-    "@types/node": "13.1.7",
+    "@types/node": "13.5.1",
     "@types/ramda": "^0.26.39",
     "@types/react": "16.9.17",
     "@types/react-dom": "16.9.4",

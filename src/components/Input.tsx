@@ -36,11 +36,19 @@ const StyledLabel = styled.label`
   flex-direction: column;
 `;
 
-const Input = ({ children, label, labelStyle: labelStyles, ...rest }: InputProps) => (
-  <StyledLabel style={labelStyles}>
-    {label}
-    <StyledInput {...rest}>{children}</StyledInput>
-  </StyledLabel>
-);
+const DEFAULT_NUMBER_PATTERN = '[0-9]*';
+
+const Input = ({ children, label, labelStyle, pattern, type, ...rest }: InputProps) => {
+  const patternProp = pattern || type === 'number' ? DEFAULT_NUMBER_PATTERN : undefined;
+
+  return (
+    <StyledLabel style={labelStyle}>
+      {label}
+      <StyledInput type={type} pattern={patternProp} {...rest}>
+        {children}
+      </StyledInput>
+    </StyledLabel>
+  );
+};
 
 export default Input;

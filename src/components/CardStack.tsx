@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-import styled, { css } from 'styled-components/macro';
+import styled from 'styled-components/macro';
 import media from 'styled-media-query';
 import { useGesture } from 'react-use-gesture';
 

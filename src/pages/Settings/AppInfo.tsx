@@ -30,7 +30,7 @@ const InfoKey = styled.span`
 const AppInfo = () => (
   <AppInfoContainer>
     {Object.entries(INFOS).map(([k, v]) => (
-      <InfoItem>
+      <InfoItem key={k}>
         <InfoKey>{k}</InfoKey> {v}
       </InfoItem>
     ))}

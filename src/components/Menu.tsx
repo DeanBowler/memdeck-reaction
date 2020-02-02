@@ -4,8 +4,8 @@ import { useTransition, animated } from 'react-spring';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import media from 'styled-media-query';
-import { darken, transparentize } from 'polished';
-import { compose } from 'ramda';
+import { darken, transparentize, shade } from 'polished';
+import { pipe } from 'ramda';
 
 import palette from 'src/style/palette';
 import HeaderBrand from './HeaderBrand';
@@ -15,7 +15,7 @@ interface MenuProps {
   onCloseClick(): void;
 }
 
-const colorProcess = compose(darken(0.1), transparentize(0.05));
+const colorProcess = pipe(shade(0.25), darken(0.05), transparentize(0.1));
 
 const MenuContainer = styled.div`
   position: fixed;
@@ -24,11 +24,22 @@ const MenuContainer = styled.div`
   right: 0;
   bottom: 0;
   overflow: auto;
-  background: linear-gradient(
-    ${p => colorProcess(p.theme.background.start)},
-    ${p => colorProcess(p.theme.background.end)}
-  );
-  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+
+  :after {
+    content: '';
+    background: linear-gradient(
+        ${p => colorProcess(p.theme.background.start)},
+        ${p => colorProcess(p.theme.background.end)}
+      ),
+      url(/images/backgrounds/felt--lowq.jpg);
+    opacity: 0.925;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+  }
 
   ${media.greaterThan('small')`
     width: 420px;
@@ -38,7 +49,7 @@ const MenuContainer = styled.div`
 const MenuHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 1rem;
+  margin: 0.5rem 1rem;
 
   ${media.greaterThan('medium')`
     margin: 1rem 2rem;
@@ -56,16 +67,18 @@ const NavList = styled.ul`
 
 const StyledNavLink = styled(NavLink)`
   cursor: pointer;
-  background: transparent;
-  opacity: 0.7;
   display: block;
   padding: 1rem 2rem;
   font-size: 2rem;
+  background: rgba(255, 255, 255, 0);
+  opacity: 0.7;
   color: ${palette.white};
   text-decoration: none;
+  transition: background 250ms ease-in-out;
 
   :hover {
     opacity: 1;
+    background: rgba(255, 255, 255, 0.1);
   }
 `;
 

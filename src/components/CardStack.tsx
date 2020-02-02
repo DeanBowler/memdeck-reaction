@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 import media from 'styled-media-query';
 import { useGesture } from 'react-use-gesture';
 
@@ -10,19 +10,14 @@ import { HintableCard } from './HintableCard';
 import { pipe, min, max } from 'ramda';
 
 import { useLocalStorage } from 'react-use';
+import { SunkenSectionMixin } from 'src/style/common';
 
 const CardStackContainer = styled.div`
+  ${SunkenSectionMixin};
   margin: 0.5rem;
-  padding: 0.5rem;
-
-  background: rgba(0, 0, 0, 0.1);
-  box-shadow: inset 5px 5px 15px rgba(0, 0, 0, 0.2);
-  overflow: auto;
-  border-radius: 5px;
 
   ${media.greaterThan('medium')`
     margin: 0.75rem;
-    padding: 1rem;
   `}
 `;
 

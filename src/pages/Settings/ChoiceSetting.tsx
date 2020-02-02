@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { equals } from 'ramda';
+import { SunkenSectionMixin } from 'src/style/common';
 
 interface ChoiceSettingProps<TSetting> {
   choices: TSetting[];
@@ -13,9 +14,8 @@ interface ChoiceSettingProps<TSetting> {
 const ChoicesContainer = styled.div`
   display: flex;
   overflow-y: auto;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 1rem;
-  border-radius: 5px;
+
+  ${SunkenSectionMixin};
 
   &:after {
     content: '';
